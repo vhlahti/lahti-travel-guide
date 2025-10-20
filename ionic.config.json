@@ -1,0 +1,7 @@
+{
+  "name": "lahti-travel-guide",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
