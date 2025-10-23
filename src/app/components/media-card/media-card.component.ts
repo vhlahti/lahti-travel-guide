@@ -1,17 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/angular/standalone';
+import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
+import { Product } from 'src/app/interfaces/product.interface';
+import { Media } from 'src/app/services/media';
 
 @Component({
   selector: 'app-media-card',
   templateUrl: './media-card.component.html',
   styleUrls: ['./media-card.component.scss'],
-  imports: [IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle],
+  imports: [
+  CommonModule
+  ],
   standalone: true
 })
 export class MediaCardComponent  implements OnInit {
+  products$!: Observable<Product[]>;
 
-  constructor() { }
+  constructor(private media: Media) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.products$ = this.media.getProductsInLahtiList();
+  }
 
 }

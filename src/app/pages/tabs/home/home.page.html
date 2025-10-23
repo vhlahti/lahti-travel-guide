@@ -6,19 +6,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <div *ngIf="products$ | async as products; else loading">
-    <div *ngFor="let product of products | slice:0:5">
-      <p>ID: {{product.id}}</p>
-      <p>Name: {{product.productInformations[0]?.name}}</p>
-      <p>Description: {{product.productInformations[0]?.description}}</p>
-      <hr>
-    </div>
-  </div>
-  
-  <ng-template #loading>
-    <p>Loading products...</p>
-  </ng-template>
-
+<ion-content>
+  <app-media-card></app-media-card>
 </ion-content>
 

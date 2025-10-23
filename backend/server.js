@@ -6,15 +6,20 @@ const fetch = require("node-fetch");
 dotenv.config();
 const app = express();
 
-const REMOTE_API_URL = 'https://api.businessfinland.fi/traveldatahub';
+const REMOTE_API_URL = process.env.SECRET_API_URL;
 const API_KEY = process.env.SECRET_KEY;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// Add root route
+// Root route
 app.get('/', (req, res) => {
+  res.send('Lahti Travel Guide server is running!');
+});
+
+// Api route
+app.get('/api', (req, res) => {
   res.send('Lahti Travel Guide server is running!');
 });
 
