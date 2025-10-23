@@ -1,13 +1,24 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      <img id="logo" src="assets/logo/ltg-logo.png" alt="Lahti Travel Guide Logo">
+      <img id="logo" src="assets/logo/ltg-logo-small.png" alt="Lahti Travel Guide Logo">
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
-  <app-media-card></app-media-card>
+<ion-content class="ion-padding">
+  <div *ngIf="products$ | async as products; else loading">
+    <div *ngFor="let product of products | slice:0:5">
+      <p>ID: {{product.id}}</p>
+      <p>Name: {{product.productInformations[0]?.name}}</p>
+      <p>Description: {{product.productInformations[0]?.description}}</p>
+      <hr>
+    </div>
+  </div>
   
+  <ng-template #loading>
+    <p>Loading products...</p>
+  </ng-template>
+
 </ion-content>
+
