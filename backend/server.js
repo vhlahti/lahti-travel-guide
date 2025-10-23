@@ -10,6 +10,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Add root route
+app.get('/', (req, res) => {
+  res.send('Lahti Travel Guide server is running!');
+});
+
 const API_URL = 'https://api.businessfinland.fi/traveldatahub';
 const API_KEY = process.env.SECRET_KEY;
 
