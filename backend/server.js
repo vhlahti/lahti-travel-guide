@@ -6,6 +6,9 @@ const fetch = require("node-fetch");
 dotenv.config();
 const app = express();
 
+const REMOTE_API_URL = 'https://api.businessfinland.fi/traveldatahub';
+const API_KEY = process.env.SECRET_KEY;
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -15,9 +18,6 @@ app.get('/', (req, res) => {
   res.send('Lahti Travel Guide server is running!');
 });
 
-const API_URL = 'https://api.businessfinland.fi/traveldatahub';
-const API_KEY = process.env.SECRET_KEY;
-
 // Test route
 app.get('/test', (req, res) => {
   res.json({ message: 'Server is running' });
@@ -26,7 +26,7 @@ app.get('/test', (req, res) => {
 // API endpoint
 app.post('/api', async (req, res) => {
   try {
-    const response = await fetch(API_URL, {
+    const response = await fetch(REMOTE_API_URL, {
       method: 'POST',
       headers: {
         'Content-Type':'application/json',

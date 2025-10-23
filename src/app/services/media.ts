@@ -25,7 +25,7 @@ export interface GetProductsResponse {
 })
 export class Media {
   private http = inject(HttpClient);
-  private API_URL = 'http://localhost:3000/api'; // use '/api' if you have an Angular proxy
+  private LOCAL_API_URL = 'http://localhost:3000/api'; // For /api use proxy config
 
     // get all products in Lahti (municipality code 398)
 
@@ -41,7 +41,7 @@ export class Media {
       }
     }`;
 
-    return this.http.post<GetProductsResponse>(this.API_URL, { query });
+    return this.http.post<GetProductsResponse>(this.LOCAL_API_URL, { query });
   }
 
   // return just the product array
