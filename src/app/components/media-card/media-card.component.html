@@ -1,12 +1,24 @@
-  <div *ngIf="products$ | async as products; else loading">
-    <div *ngFor="let product of products | slice:0:5">
-      <p>ID: {{product.id}}</p>
-      <p>Name: {{product.productInformations[0]?.name}}</p>
-      <p>Description: {{product.productInformations[0]?.description}}</p>
-      <hr>
-    </div>
+<div *ngIf="products$ | async as products; else loading">
+  <div class="card-list">
+    <ion-card *ngFor="let product of products | slice:0:10" class="product-card">
+      <div class="image-wrapper">
+        <img
+          [src]="product.productImages[0]?.thumbnailUrl || 'assets/img/card-placeholder-small.png'"
+          [alt]="product.productImages[0]?.altText || product.productInformations[0]?.name || 'Product image'"/>
+      </div>
+
+      <ion-card-header>
+        <ion-card-title class="text-center">{{product.productInformations[0]?.name}}</ion-card-title>
+        <ion-card-subtitle class="text-center">{{product.company.businessName}}</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content class="text-center">
+        <ion-button size="small">Details</ion-button>
+      </ion-card-content>
+    </ion-card>
   </div>
+</div>
   
-  <ng-template #loading>
-    <p>Loading products...</p>
-  </ng-template>
+<ng-template #loading>
+  <p>Loading products...</p>
+</ng-template>
