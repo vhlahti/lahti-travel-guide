@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/interfaces/product.interface';
 import { Media } from 'src/app/services/media';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-media-card',
@@ -16,7 +17,8 @@ import { Media } from 'src/app/services/media';
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
-  IonButton
+  IonButton,
+  RouterModule
   ],
   standalone: true
 })
