@@ -1,11 +1,3 @@
-export interface ProductInformation {
-  description?: string;
-  language?: string;
-  name?: string;
-  url?: string;
-  webshopUrl?: string;
-}
-
 export interface Company {
   businessName: string;
 }
@@ -19,6 +11,14 @@ export interface PostalAddress {
 
 export interface ProductAvailableMonth {
   month: string;
+}
+
+export interface ProductInformation {
+  description?: string;
+  language?: string;
+  name?: string;
+  url?: string;
+  webshopUrl?: string;
 }
 
 export interface ProductImage {
