@@ -6,6 +6,7 @@ import { Observable, map } from 'rxjs';
 import { Product } from 'src/app/interfaces/product.interface';
 import { Media } from 'src/app/services/media';
 import { ActivatedRoute } from '@angular/router';
+import { TagUnderscorePipe } from './tag-underscore.pipe';
 
 @Component({
   selector: 'app-item-detail',
@@ -20,7 +21,8 @@ import { ActivatedRoute } from '@angular/router';
     FormsModule,
     IonButtons,
     IonBackButton,
-    IonSpinner
+    IonSpinner,
+    TagUnderscorePipe
   ]
 })
 export class ItemDetailPage implements OnInit {

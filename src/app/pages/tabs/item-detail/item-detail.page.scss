@@ -8,3 +8,29 @@ ion-spinner {
   align-items: center;
   height: 100%;
 }
+
+div.bg-container {
+  margin: 8px;
+  div.bg {
+    width: 100%;
+    height: 16rem;
+    border-radius: 25px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: var(--ion-color-light);
+  }
+}
+
+ion-header {
+  margin: 8px;
+  background: transparent;
+  ion-toolbar {
+    --background: transparent;
+    --ion-color-base: transparent;
+    ion-buttons {
+      background: rgba(193, 51, 51, 0.068);
+      border-radius: 50%;
+    }
+  }
+}
