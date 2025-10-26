@@ -1,7 +1,23 @@
-<div *ngIf="products$ | async as products; else loading">
+<div class="filter-buttons">
+  <ion-button
+    size="small"
+    [fill]="selectedCategory === 'all' ? 'solid' : 'outline'"
+    (click)="filterByCategory('all')">
+    All
+  </ion-button>
+  <ion-button
+    *ngFor="let cat of productCategories"
+    size="small"
+    [fill]="selectedCategory === cat ? 'solid' : 'outline'"
+    (click)="filterByCategory(cat)">
+    {{ formatCategory(cat) }}
+  </ion-button>
+</div>
+
+<div *ngIf="filteredProducts.length > 0; else loading">
   <cdk-virtual-scroll-viewport itemSize="200" class="scroll-viewport">
   <div class="card-list">
-    <ion-card *cdkVirtualFor="let product of products" class="product-card">
+    <ion-card *cdkVirtualFor="let product of filteredProducts" class="product-card">
       <div class="image-wrapper">
         <img
           [src]="product.productImages[0]?.thumbnailUrl || 'assets/img/card-placeholder-small.png'"
