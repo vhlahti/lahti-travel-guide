@@ -1,3 +1,5 @@
+import { ProductType } from './product-type.enum';
+
 export interface Company {
   businessName: string;
 }
@@ -98,7 +100,7 @@ export interface SocialMedia {
 
 export interface Product {
   id: string;
-  type: string;
+  type: ProductType;
   duration: number;
   durationType: string;
   company: Company;
