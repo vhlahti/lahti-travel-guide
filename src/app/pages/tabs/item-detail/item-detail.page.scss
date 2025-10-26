@@ -29,8 +29,15 @@ ion-header {
     --background: transparent;
     --ion-color-base: transparent;
     ion-buttons {
-      background: rgba(193, 51, 51, 0.068);
       border-radius: 50%;
     }
   }
+}
+
+ion-back-button {
+  --background: rgb(241, 241, 241, 0.9); /* white with 90% opacity */
+}
+
+.text-container {
+  margin: 1rem;
 }

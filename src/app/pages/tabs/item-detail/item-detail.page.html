@@ -14,7 +14,8 @@
     <div class="bg-container">
     <div class="bg" [style.backgroundImage]="'url(' + (product.productImages[0]?.originalUrl || 'assets/img/detail_placeholder.png') + ')'"></div>
   </div>
-  <h1>{{ product.productInformations[0]?.name }}</h1>
+  <div class="text-container">
+  <h3>{{ product.productInformations[0]?.name }}</h3>
   <p>{{ product.company.businessName }}</p>
   <p>{{ product.productInformations[0]?.description }}</p>
   <a *ngIf="product.productInformations?.length"
@@ -32,6 +33,7 @@
   <p>{{ product.contactDetails[0]?.email }}</p>
   <p>{{ product.contactDetails[0]?.phone }}</p>
   <p>{{ product.updatedAt | date:'dd.MM.yyyy' }}</p>
+</div>
 </div>
 </div>
 
