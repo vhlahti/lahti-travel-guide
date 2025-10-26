@@ -20,5 +20,10 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/tabs/home/home.page').then( m => m.HomePage)
       },
     ]
+  },
+  {
+    path: 'item-detail/:id',
+    loadComponent: () => import('./pages/tabs/item-detail/item-detail.page').then( m => m.ItemDetailPage)
   }
+
 ];

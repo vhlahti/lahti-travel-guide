@@ -1,0 +1,53 @@
+<ion-content [fullscreen]="true" color="light">
+<ion-header class="ion-no-border" slot="fixed">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/tabs/home">
+    </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div *ngIf="product$ | async as product; else loading">
+  <div *ngIf="product; else notFound">
+    <div class="bg-container">
+    <div class="bg" [style.backgroundImage]="'url(' + (product.productImages[0]?.originalUrl || 'assets/img/detail_placeholder.png') + ')'"></div>
+  </div>
+  <div class="text-container">
+  <h3>{{ product.productInformations[0]?.name }}</h3>
+  <p>{{ product.company.businessName }}</p>
+  <p>{{ product.productInformations[0]?.description }}</p>
+  <a *ngIf="product.productInformations?.length"
+   [href]="product.productInformations[0].url"
+   target="_blank"
+   rel="noopener noreferrer">
+  Product webpage</a>
+  <p>{{ product.type }}</p>
+  <p>{{ product.postalAddresses[0]?.postalCode }}</p>
+  <p>{{ product.postalAddresses[0]?.streetName }}</p>
+  <p>{{ product.postalAddresses[0]?.city }}</p>
+  <p *ngFor="let m of product.productAvailableMonths">{{ m.month }}</p>
+  <p *ngFor="let t of product.productTags">{{ t.tag | tagUnderscore }}</p>
+  <p>{{ product.productPricings[0]?.pricingType }}</p>
+  <p>{{ product.contactDetails[0]?.email }}</p>
+  <p>{{ product.contactDetails[0]?.phone }}</p>
+  <p>{{ product.updatedAt | date:'dd.MM.yyyy' }}</p>
+</div>
+</div>
+</div>
+
+<ng-template #loading>
+  <div class="spinner-container">
+    <ion-spinner name="lines-sharp"></ion-spinner>
+  </div>
+</ng-template>
+
+<ng-template #notFound>
+    <div class="ion-padding not-found">
+      <p>Item not found.</p>
+      <p>The item you’re looking for doesn’t exist or was removed.</p>
+    </div>
+</ng-template>
+
+</ion-content>
