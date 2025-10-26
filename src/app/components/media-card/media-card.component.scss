@@ -29,4 +29,16 @@
 
 .product-card {
   margin-top: 0.5rem;
+  width: 340px;
+  box-sizing: border-box;
+}
+
+.scroll-viewport {
+  height: 100vh; /* or a specific container height */
+  width: 100%;
+  overflow: auto;
+}
+
+.loading-message {
+  margin: 1rem;
 }

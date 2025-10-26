@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Product } from 'src/app/interfaces/product.interface';
 import { Media } from 'src/app/services/media';
 import { RouterModule } from '@angular/router';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-media-card',
@@ -18,7 +19,8 @@ import { RouterModule } from '@angular/router';
   IonCardSubtitle,
   IonCardTitle,
   IonButton,
-  RouterModule
+  RouterModule,
+  ScrollingModule
   ],
   standalone: true
 })
