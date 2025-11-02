@@ -10,15 +10,35 @@ const REMOTE_API_URL = process.env.SECRET_API_URL;
 const API_KEY = process.env.SECRET_KEY;
 
 // Middleware
-app.use(cors());
 app.use(express.json());
+
+// CORS configuration
+const allowedOrigin = process.env.ORIGIN;
+
+// Allow only specific origins (secure)
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigin.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+  })
+);
 
 // Root route
 app.get('/', (req, res) => {
   res.send('Lahti Travel Guide server is running!');
 });
 
-// Api route
+// API route
 app.get('/api', (req, res) => {
   res.send('Lahti Travel Guide server is running!');
 });
@@ -51,3 +71,4 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
