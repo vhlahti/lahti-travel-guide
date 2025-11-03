@@ -10,14 +10,14 @@ dotenv.config();
 // Hidden .env variables
 const REMOTE_API_URL = process.env.SECRET_API_URL;
 const API_KEY = process.env.SECRET_KEY;
-const DB_URL = process.env.MONGODB_URL;
+const DB_URI = process.env.MONGODB_URI;
 const allowedOrigin = process.env.ORIGIN;
 
 // Connect MongDB Atlas
 const connectDB = async () => {
     try {
        mongoose.set('strictQuery', false);
-       await mongoose.connect(DB_URL, {
+       await mongoose.connect(DB_URI, {
           useNewUrlParser: true,
           useUnifiedTopology: true,
        });
