@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const fetch = require('node-fetch');
 const mongoose = require('mongoose');
+const router = express.Router();
 
 dotenv.config();
 
@@ -84,6 +85,10 @@ app.post('/api', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+
+// User account routes
+app.use(router);
+app.use('/api/users', require('./routes/userRoutes'));
 
 // Log server start
 const PORT = process.env.PORT || 3000;
