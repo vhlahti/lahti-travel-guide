@@ -5,4 +5,10 @@ router.get('/', (req, res) => {
     res.send('This is user account routing.');
  });
 
- module.exports = router;
+const {
+	registerUser,
+} = require('../controllers/userController');
+
+router.post('/register', registerUser);
+
+module.exports = router;
