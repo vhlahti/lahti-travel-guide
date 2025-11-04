@@ -24,6 +24,14 @@ export const routes: Routes = [
   {
     path: 'item-detail/:id',
     loadComponent: () => import('./pages/tabs/item-detail/item-detail.page').then( m => m.ItemDetailPage)
+  },  {
+    path: 'login',
+    loadComponent: () => import('./pages/tabs/login/login.page').then( m => m.LoginPage)
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./pages/tabs/register/register.page').then( m => m.RegisterPage)
   }
+
 
 ];
