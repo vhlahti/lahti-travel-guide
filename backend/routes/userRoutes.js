@@ -8,6 +8,7 @@ router.get('/', (req, res) => {
 const {
 	registerUser,
     loginUser,
+    logoutUser,
     userProfile,
 } = require('../controllers/userController');
 
@@ -15,6 +16,7 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 router.post('/register', registerUser);
 router.post('/login', loginUser);
+router.post('/logout', logoutUser);
 router.post('/profile', authMiddleware, userProfile);
 
 module.exports = router;

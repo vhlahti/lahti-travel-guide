@@ -75,6 +75,20 @@ const loginUser = async (req, res) => {
     }
  };
 
+ const logoutUser = async (req, res) => {
+    try {
+        res.cookie('jwt', '', {
+            httpOnly: false,
+            secure: true,
+            sameSite: 'none',
+            expires: new Date(0),
+        });
+        res.status(200).json({ message: "Logged out successfully" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+ };
+
  const userProfile = async (req, res) => {
     try {
         const token = req.headers.authorization.split(' ')[1];
@@ -101,5 +115,6 @@ const loginUser = async (req, res) => {
 module.exports = {
     registerUser,
     loginUser,
+    logoutUser,
     userProfile,
 };
