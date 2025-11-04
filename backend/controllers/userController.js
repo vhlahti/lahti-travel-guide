@@ -6,15 +6,15 @@ const registerUser = async (req, res) => {
     const { username, password, confirmPassword } = req.body;
     try {
         if (!username || !password || !confirmPassword) {
-            return res.status(400).json({ message: 'All fields are required' });
+            return res.status(400).json({ message: "All fields are required" });
         }
 
         const userExists = await User.findOne({ username });
         if (userExists) {
-            return res.status(400).json({ message: 'User already exists' });
+            return res.status(400).json({ message: "User already exists" });
         }
         if (password !== confirmPassword) {
-            return res.status(400).json({ message: 'Passwords do not match' });
+            return res.status(400).json({ message: "Passwords do not match" });
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -55,13 +55,13 @@ const loginUser = async (req, res) => {
         }
  
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-            expiresIn: "1d",
+            expiresIn: '1d',
         });
  
-        res.cookie("jwt", token, {
+        res.cookie('jwt', token, {
             httpOnly: false,
             expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-            sameSite: "none",
+            sameSite: 'none',
             secure: true,
         });
  
@@ -75,7 +75,31 @@ const loginUser = async (req, res) => {
     }
  };
 
+ const userProfile = async (req, res) => {
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        const decoded = jwt.decode(token, process.env.JWT_SECRET);
+        if (!decoded) {
+            return res.status(401).json({ message: "Invalid token" });
+        }
+        const { id } = decoded;
+ 
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+  
+        res.status(200).json({
+            id: user._id,
+            username: user.username,
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+ };
+
 module.exports = {
     registerUser,
     loginUser,
+    userProfile,
 };
