@@ -1,3 +1,20 @@
-<p>
-  register works!
-</p>
+<div class="container">
+    <h1 class="heading">Create account<br><br></h1>
+    <p class="para">Sign up to get started!</p>
+    <form>
+      <ion-item lines="none" class="ion-item">
+        <fieldset  class="input-item">
+          <legend>Username</legend> 
+          <ion-input formControlName="username" type="username" placeholder="username"></ion-input>
+        </fieldset>
+      </ion-item>
+      <ion-item lines="none" class="ion-item">
+        <fieldset class="input-item">
+          <legend>Password</legend> 
+          <ion-input formControlName="password" type="password" placeholder="*******"></ion-input>
+        </fieldset>
+      </ion-item>
+      <p class="suggestion-text">I'm already a member.<a class="suggestion-link">Log in?</a></p>
+      <ion-button class="action-button" expand="block">Sign up</ion-button>
+    </form>
+</div>
