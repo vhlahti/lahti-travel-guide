@@ -47,7 +47,7 @@
       <p class="message">{{ message }}</p>
       }
 
-      <p class="suggestion-text">I'm already a member.<a class="suggestion-link" (click)="switchToLogin.emit()">Log in?</a></p>
+      <p class="suggestion-text">I'm already a member.<a class="suggestion-link" (click)="onSwitchToLogin()">Log in?</a></p>
       <ion-button class="action-button" expand="block" type="submit" [disabled]="form.invalid">Register</ion-button>
 
     </form>

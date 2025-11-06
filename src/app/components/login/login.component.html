@@ -29,7 +29,7 @@
       <p class="error-text">{{ errorMessage }}</p>
       }
 
-      <p class="suggestion-text">I'm a new user.<a class="suggestion-link" (click)="switchToRegister.emit()">Register?</a></p>
+      <p class="suggestion-text">I'm a new user.<a class="suggestion-link" (click)="onSwitchToRegister()">Register?</a></p>
       <ion-button class="action-button" expand="block" type="submit" [disabled]="form.invalid">Log in</ion-button>
 
     </form>

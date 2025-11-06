@@ -41,5 +41,9 @@ export class LoginComponent {
       error: (err) => (this.errorMessage = err.error?.error || "Login failed! Please check your credentials."),
     });
   }
+
+  onSwitchToRegister() {
+    this.switchToRegister.emit();
+  }
   
 }

@@ -1,14 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton } from '@ionic/angular/standalone';
+import { Account } from 'src/app/services/account';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
+   imports: [
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
+    IonButton,
+],
+  standalone: true
 })
-export class ProfileComponent  implements OnInit {
+export class ProfileComponent {
 
-  constructor() { }
+  @Output() logout = new EventEmitter<void>();
+  @Output() switchToLogin = new EventEmitter<void>();
 
-  ngOnInit() {}
+  username = ''; // Decode this from the JWT
 
+  constructor(private auth: Account) {}
+
+ onLogout() {
+    this.auth.logout();
+    this.logout.emit();
+  }
+
+  onSwitchToLogin() {
+    this.switchToLogin.emit();
+  }
+  
 }

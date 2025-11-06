@@ -42,10 +42,14 @@ export class RegisterComponent {
     this.auth.register(username!, password!, confirmPassword!).subscribe({
       next: () => {
         this.message = "Account created successfully!";
-        setTimeout(() => this.switchToLogin.emit(), 5000);
+        setTimeout(() => this.switchToLogin.emit(), 3000);
       },
       error: (err) => (this.message = err.error?.error || "Registration failed! Username already exists."),
     });
+  }
+
+  onSwitchToLogin() {
+    this.switchToLogin.emit();
   }
 
 }

@@ -16,7 +16,8 @@
 
         @case ('profile') {
             <app-profile
-            (logout)="onLogout()">
+            (logout)="onLogout()"
+            (switchToLogin)="setView('login')">
             </app-profile>
         }
     }
