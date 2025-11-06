@@ -1,5 +1,24 @@
 <ion-content [fullscreen]="true">
-<app-profile></app-profile>
-<app-login></app-login>
-<app-register></app-register>
+    
+    @switch (view) {
+        @case ('login') {
+            <app-login
+            (switchToRegister)="setView('register')"
+            (loginSuccess)="setView('profile')">
+            </app-login>
+        }
+
+        @case ('register') {
+            <app-register
+            (switchToLogin)="setView('login')">
+            </app-register>
+        }
+
+        @case ('profile') {
+            <app-profile
+            (logout)="onLogout()">
+            </app-profile>
+        }
+    }
+
 </ion-content>
