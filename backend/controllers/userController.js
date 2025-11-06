@@ -29,8 +29,7 @@ const registerUser = async (req, res) => {
            id: user._id,
            username: user.username,
         });
-    }
-    catch (error) {
+    } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
@@ -43,13 +42,11 @@ const loginUser = async (req, res) => {
         }
  
         const user = await User.findOne({ username });
- 
         if (!user) {
             return res.status(400).json({ message: "User doesn't exist" });
         }
  
         const isMatch = await bcrypt.compare(password, user.password);
- 
         if (!isMatch) {
             return res.status(400).json({ message: "Invalid password" });
         }
@@ -58,15 +55,9 @@ const loginUser = async (req, res) => {
             expiresIn: '1d',
         });
  
-        res.cookie('jwt', token, {
-            httpOnly: false,
-            expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-            sameSite: 'none',
-            secure: true,
-        });
- 
-        res.status(200).json({
+        return res.status(200).json({
             id: user._id,
+            username: user.username,
             token,
             message: "Login successful",
         });
@@ -78,12 +69,6 @@ const loginUser = async (req, res) => {
 
  const logoutUser = async (req, res) => {
     try {
-        res.cookie('jwt', '', {
-            httpOnly: false,
-            secure: true,
-            sameSite: 'none',
-            expires: new Date(0),
-        });
         res.status(200).json({ message: "Logged out successfully" });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -91,27 +76,29 @@ const loginUser = async (req, res) => {
  };
 
  const userProfile = async (req, res) => {
-    try {
-        const token = req.headers.authorization.split(' ')[1];
-        const decoded = jwt.decode(token, process.env.JWT_SECRET);
-        if (!decoded) {
-            return res.status(401).json({ message: "Invalid token" });
-        }
-        const { id } = decoded;
- 
-        const user = await User.findById(id);
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-  
-        res.status(200).json({
-            id: user._id,
-            username: user.username,
-        });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ message: "No token provided" });
     }
- };
+
+    const token = authHeader.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({
+      id: user._id,
+      username: user.username,
+    });
+  } catch (error) {
+    console.error("Profile error:", error.message);
+    res.status(401).json({ message: "Token is not valid" });
+  }
+};
 
 module.exports = {
     registerUser,
