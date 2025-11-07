@@ -10,7 +10,10 @@ export class Favorites {
   private apiUrl = 'http://localhost:3000/api/users'; // temp for local development
   private favorites$ = new BehaviorSubject<string[]>([]);
 
-  constructor(private http: HttpClient, private auth: Account) {}
+  constructor(private http: HttpClient, private auth: Account) {
+    this.auth.getLogout$().subscribe(() => this.clearFavoritesLocal()); // Listen to logout event
+    this.auth.getLogin$().subscribe(() => this.loadFavorites());
+  }
 
   // Helper: Build auth headers
   private getAuthHeaders(): HttpHeaders {
@@ -89,6 +92,13 @@ export class Favorites {
         map(res => res.favorites || []),
         catchError(() => of([]))
       );
+  }
+
+  // Clear favorites local storage on user logout
+  clearFavoritesLocal(): void {
+    this.favorites$.next([]);
+    localStorage.removeItem('favorites');
+    console.log('Favorites cleared on logout');
   }
   
 }
