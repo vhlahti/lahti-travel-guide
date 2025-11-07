@@ -18,11 +18,20 @@ export class Favorites {
   // Helper: Build auth headers
   private getAuthHeaders(): HttpHeaders {
     const token = this.auth.getToken();
+  if (token) { // Only add header if a valid token exists
     return new HttpHeaders({ Authorization: `Bearer ${token}` });
+  }
+  return new HttpHeaders(); // Empty headers
   }
 
   // Load favorites from backend and update subject
   loadFavorites(): void {
+    if (!this.auth.isAuthenticated()) {
+      console.log('User not logged in — skipping favorites fetch.');
+      this.favorites$.next([]);
+      return;
+    }
+    
     this.http
       .get<{ favorites: string[] }>(`${this.apiUrl}/favorites`, {
         headers: this.getAuthHeaders(),
