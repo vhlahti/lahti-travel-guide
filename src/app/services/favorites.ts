@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Account } from './account';
 
 @Injectable({
@@ -35,7 +35,8 @@ export class Favorites {
     Authorization: `Bearer ${token}`,
   });
 
-  return this.http.get<string[]>(`${this.apiUrl}/favorites`, { headers });
+  return this.http
+    .get<{ favorites: string[] }>(`${this.apiUrl}/favorites`, { headers })
+    .pipe(map(res => res.favorites));
   }
-
 }
