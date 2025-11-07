@@ -100,9 +100,43 @@ const loginUser = async (req, res) => {
   }
 };
 
+const addFavorite = async (req, res) => {
+  try {
+    const user = req.user;
+    const itemId = req.params.id;
+
+    if (!user) return res.status(401).json({ message: "Unauthorized" });
+
+    const index = user.favorites.indexOf(itemId);
+    if (index === -1) {
+      user.favorites.push(itemId);
+    } else {
+      user.favorites.splice(index, 1);
+    }
+
+    await user.save();
+    res.status(200).json({ favorites: user.favorites });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const getFavorites = async (req, res) => {
+  try {
+    const user = req.user;
+    if (!user) return res.status(401).json({ message: "Unauthorized" });
+
+    res.status(200).json({ favorites: user.favorites });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
     registerUser,
     loginUser,
     logoutUser,
     userProfile,
+    addFavorite,
+    getFavorites,
 };

@@ -13,6 +13,12 @@ const userSchema = mongoose.Schema({
        type: Date,
        default: new Date(new Date().getTime()),
    },
+   favorites: [
+    {
+      type: String,
+      required: false,
+    },
+  ],
 });
 
 module.exports = mongoose.model('User', userSchema);
