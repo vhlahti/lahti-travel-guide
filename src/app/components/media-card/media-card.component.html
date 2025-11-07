@@ -29,6 +29,13 @@
         <ion-card-subtitle class="text-center">{{product.company.businessName}}</ion-card-subtitle>
       </ion-card-header>
 
+      <ion-button
+        fill="outline"
+        color="primary"
+        (click)="toggleFavorite(product.id)">
+        {{ favoriteIds.includes(product.id) ? 'Remove from Favorites' : 'Add to Favorites' }}
+      </ion-button>
+
       <ion-card-content class="text-center">
         <a routerLink="/item-detail/{{product.id}}"><ion-button size="small">Details</ion-button></a>
       </ion-card-content>

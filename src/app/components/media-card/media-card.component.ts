@@ -7,6 +7,7 @@ import { Media } from 'src/app/services/media';
 import { RouterModule } from '@angular/router';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ProductType } from 'src/app/interfaces/product-type.enum';
+import { Favorites } from 'src/app/services/favorites';
 
 @Component({
   selector: 'app-media-card',
@@ -44,15 +45,25 @@ export class MediaCardComponent implements OnInit {
   ProductType.Venue
   ];
 
-  constructor(private media: Media) { }
+  favoriteIds: string[] = [];
+
+  constructor(private media: Media, private fav: Favorites) { }
 
   ngOnInit() {
+    // load media cards
     this.products$ = this.media.getProductsInLahtiList();
-
-    // subscribe to store products locally for filtering
     this.products$.subscribe((products) => {
       this.allProducts = products;
-      this.filteredProducts = products; // initially show all
+      this.filteredProducts = products;
+    });
+
+    // load favorites
+    this.fav.getFavorites().subscribe({
+      next: (res: any) => {
+        this.favoriteIds = res.favorites || res;
+        console.log('Loaded favorites:', this.favoriteIds);
+      },
+      error: (err) => console.error('Error fetching favorites:', err),
     });
   }
 
@@ -72,6 +83,30 @@ export class MediaCardComponent implements OnInit {
   // hide underscores and capitalize words
   formatCategory(cat: string) {
   return cat.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  }
+
+  // favorites
+  toggleFavorite(productId: string) {
+  if (this.favoriteIds.includes(productId)) {
+    this.fav.removeFavorite(productId).subscribe({
+      next: () => {
+        this.favoriteIds = this.favoriteIds.filter(id => id !== productId);
+      },
+      error: err => console.error('Error removing favorite:', err)
+    });
+  } else {
+    this.fav.addFavorite(productId).subscribe({
+      next: () => {
+        this.favoriteIds.push(productId);
+      },
+      error: err => console.error('Error adding favorite:', err)
+    });
+  }
+  }
+
+  // helper for the template
+  isFavorite(productId: string): boolean {
+    return this.favoriteIds.includes(productId);
   }
 
 }
