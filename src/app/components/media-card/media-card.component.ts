@@ -7,6 +7,7 @@ import { Media } from 'src/app/services/media';
 import { RouterModule } from '@angular/router';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ProductType } from 'src/app/interfaces/product-type.enum';
+import { Favorites } from 'src/app/services/favorites';
 
 @Component({
   selector: 'app-media-card',
@@ -44,16 +45,23 @@ export class MediaCardComponent implements OnInit {
   ProductType.Venue
   ];
 
-  constructor(private media: Media) { }
+  favoriteIds: string[] = [];
+
+  constructor(private media: Media, private fav: Favorites) { }
 
   ngOnInit() {
+    // load media cards
     this.products$ = this.media.getProductsInLahtiList();
-
-    // subscribe to store products locally for filtering
     this.products$.subscribe((products) => {
       this.allProducts = products;
-      this.filteredProducts = products; // initially show all
+      this.filteredProducts = products;
     });
+
+    // subscribe once to the BehaviorSubject for real-time favorites
+    this.fav.getFavorites$().subscribe((ids) => (this.favoriteIds = ids));
+
+    // load initial favorites from backend
+    this.fav.loadFavorites();
   }
 
   // filtering logic
@@ -72,6 +80,20 @@ export class MediaCardComponent implements OnInit {
   // hide underscores and capitalize words
   formatCategory(cat: string) {
   return cat.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  }
+
+  // favorites toggle
+  toggleFavorite(id: string) {
+  if (this.favoriteIds.includes(id)) {
+    this.fav.removeFavorite(id).subscribe();
+  } else {
+    this.fav.addFavorite(id).subscribe();
+  }
+  }
+
+  // helper for the template
+  isFavorite(productId: string): boolean {
+    return this.favoriteIds.includes(productId);
   }
 
 }
