@@ -132,6 +132,20 @@ const getFavorites = async (req, res) => {
   }
 };
 
+const removeFavorite = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    const { itemId } = req.params;
+
+    user.favorites = user.favorites.filter(favId => favId !== itemId);
+    await user.save();
+
+    res.status(200).json({ favorites: user.favorites });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
     registerUser,
     loginUser,
@@ -139,4 +153,5 @@ module.exports = {
     userProfile,
     addFavorite,
     getFavorites,
+    removeFavorite,
 };

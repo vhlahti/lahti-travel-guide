@@ -12,6 +12,7 @@ const {
     userProfile,
     addFavorite,
     getFavorites,
+    removeFavorite,
 } = require('../controllers/userController');
 
 const authMiddleware = require('../middleware/authMiddleware');
@@ -23,5 +24,6 @@ router.get('/profile', authMiddleware, userProfile);
 
 router.get('/favorites', authMiddleware, getFavorites);
 router.post('/favorites/:id', authMiddleware, addFavorite);
+router.delete('/favorites/:itemId', authMiddleware, removeFavorite);
 
 module.exports = router;
