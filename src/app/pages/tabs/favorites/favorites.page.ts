@@ -20,31 +20,27 @@ export class FavoritesPage implements OnInit {
   constructor(private fav: Favorites, private media: Media) { }
 
   ngOnInit() {
-    // Fetch favorite IDs
-    this.fav.getFavorites().pipe(
-      switchMap((res: any) => {
-        const ids = res?.favorites ?? res;  // backend returns { favorites: [] }
-        console.log('Loaded favorites 2:', ids);
+  // Automatically update when favorites change
+    this.fav
+      .getFavorites$()
+      .pipe(
+        switchMap((ids) => {
+          // If no favorites yet, return empty array
+          if (!ids?.length) return [ [] ];
 
-        // If no favorites, return an empty array
-        if (!ids?.length) return [ [] ];
+          // Filter products matching favorite IDs
+          return this.media.getProductsInLahtiList().pipe(
+            map((products) => products.filter((p) => ids.includes(p.id)))
+          );
+        })
+      )
+      .subscribe({
+        next: (matched) => (this.favoriteProducts = matched),
+        error: (err) => console.error('Error loading favorite products:', err),
+      });
 
-        // Load all products from your media service
-        return this.media.getProductsInLahtiList().pipe(
-          map(products => {
-            console.log('Sample product:', products[0]); // inspect this in console
-            const matched = products.filter(p => ids.includes(p.id)); // adjust id field if needed
-            console.log('Matched favorites:', matched);
-            return matched;
-          })
-        );
-      })
-    ).subscribe({
-      next: (matchedProducts) => {
-        this.favoriteProducts = matchedProducts;
-        console.log('Favorite products:', matchedProducts);
-      },
-      error: (err) => console.error('Error fetching favorites:', err)
-    });
+    // Initial load from backend
+    this.fav.loadFavorites();
   }
+
 }

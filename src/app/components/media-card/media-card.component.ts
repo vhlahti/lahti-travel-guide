@@ -57,14 +57,11 @@ export class MediaCardComponent implements OnInit {
       this.filteredProducts = products;
     });
 
-    // load favorites
-    this.fav.getFavorites().subscribe({
-      next: (res: any) => {
-        this.favoriteIds = res.favorites || res;
-        console.log('Loaded favorites:', this.favoriteIds);
-      },
-      error: (err) => console.error('Error fetching favorites:', err),
-    });
+    // subscribe once to the BehaviorSubject for real-time favorites
+    this.fav.getFavorites$().subscribe((ids) => (this.favoriteIds = ids));
+
+    // load initial favorites from backend
+    this.fav.loadFavorites();
   }
 
   // filtering logic
@@ -85,22 +82,12 @@ export class MediaCardComponent implements OnInit {
   return cat.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
   }
 
-  // favorites
-  toggleFavorite(productId: string) {
-  if (this.favoriteIds.includes(productId)) {
-    this.fav.removeFavorite(productId).subscribe({
-      next: () => {
-        this.favoriteIds = this.favoriteIds.filter(id => id !== productId);
-      },
-      error: err => console.error('Error removing favorite:', err)
-    });
+  // favorites toggle
+  toggleFavorite(id: string) {
+  if (this.favoriteIds.includes(id)) {
+    this.fav.removeFavorite(id).subscribe();
   } else {
-    this.fav.addFavorite(productId).subscribe({
-      next: () => {
-        this.favoriteIds.push(productId);
-      },
-      error: err => console.error('Error adding favorite:', err)
-    });
+    this.fav.addFavorite(id).subscribe();
   }
   }
 
