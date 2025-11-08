@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonIcon, AlertController } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/interfaces/product.interface';
@@ -10,6 +10,7 @@ import { ProductType } from 'src/app/interfaces/product-type.enum';
 import { Favorites } from 'src/app/services/favorites';
 import { addIcons } from 'ionicons';
 import { heart, heartOutline } from 'ionicons/icons';
+import { Account } from 'src/app/services/account';
 
 @Component({
   selector: 'app-media-card',
@@ -49,8 +50,9 @@ export class MediaCardComponent implements OnInit {
   ];
 
   favoriteIds: string[] = [];
+  isLoggedIn = false;
 
-  constructor(private media: Media, private fav: Favorites) {
+  constructor(private media: Media, private fav: Favorites, private auth: Account, private alertCtrl: AlertController) {
     addIcons({
     heart, heartOutline })
    }
@@ -61,6 +63,11 @@ export class MediaCardComponent implements OnInit {
     this.products$.subscribe((products) => {
       this.allProducts = products;
       this.filteredProducts = products;
+    });
+
+    // watch login state
+    this.auth.isLoggedIn().subscribe((loggedIn) => {
+      this.isLoggedIn = loggedIn;
     });
 
     // subscribe once to the BehaviorSubject for real-time favorites
@@ -89,12 +96,22 @@ export class MediaCardComponent implements OnInit {
   }
 
   // favorites toggle
-  toggleFavorite(id: string) {
-  if (this.favoriteIds.includes(id)) {
+  async toggleFavorite(id: string) {
+    if (!this.isLoggedIn) {
+      const alert = await this.alertCtrl.create({
+        header: 'Login required!',
+        message: 'You must be logged in to manage favorites.',
+        buttons: ['OK'],
+      });
+      await alert.present();
+      return;
+    }
+
+    if (this.favoriteIds.includes(id)) {
     this.fav.removeFavorite(id).subscribe();
-  } else {
+    } else {
     this.fav.addFavorite(id).subscribe();
-  }
+    }
   }
 
   // helper for the template
