@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton } from '@ionic/angular/standalone';
+import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/interfaces/product.interface';
@@ -8,6 +8,8 @@ import { RouterModule } from '@angular/router';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ProductType } from 'src/app/interfaces/product-type.enum';
 import { Favorites } from 'src/app/services/favorites';
+import { addIcons } from 'ionicons';
+import { heart, heartOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-media-card',
@@ -22,7 +24,8 @@ import { Favorites } from 'src/app/services/favorites';
   IonCardTitle,
   IonButton,
   RouterModule,
-  ScrollingModule
+  ScrollingModule,
+  IonIcon,
   ],
   standalone: true
 })
@@ -47,7 +50,10 @@ export class MediaCardComponent implements OnInit {
 
   favoriteIds: string[] = [];
 
-  constructor(private media: Media, private fav: Favorites) { }
+  constructor(private media: Media, private fav: Favorites) {
+    addIcons({
+    heart, heartOutline })
+   }
 
   ngOnInit() {
     // load media cards
