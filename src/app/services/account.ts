@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 interface LoginResponse {
   token: string;
@@ -13,6 +14,7 @@ interface LoginResponse {
 export class Account {
   private apiUrl = 'http://localhost:3000/api/users'; // temp URL for local development
   private tokenKey = 'auth_token';
+  private jwtHelper = new JwtHelperService();
 
   private loggedIn$ = new BehaviorSubject<boolean>(this.isAuthenticated()); // Tracks whether user is logged in
   private user$ = new BehaviorSubject<any | null>(null); // Store and share current user info
@@ -51,7 +53,8 @@ export class Account {
   }
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem(this.tokenKey);
+    const token = this.getToken();
+    return !!token && !this.jwtHelper.isTokenExpired(token);
   }
 
   isLoggedIn(): Observable<boolean> {
@@ -68,7 +71,10 @@ export class Account {
 
   fetchProfile(): Observable<any> {
   const token = this.getToken();
-  if (!token) return new Observable();
+    if (!token || this.jwtHelper.isTokenExpired(token)) {
+      console.warn('Token missing or expired — skipping profile fetch.');
+      return of(null); // prevents unnecessary backend call
+    }
 
   const headers = new HttpHeaders({
     Authorization: `Bearer ${token}`,
@@ -82,6 +88,11 @@ export class Account {
   // Expose user observable for components to subscribe to
   getUser(): Observable<any | null> {
     return this.user$.asObservable();
+  }
+
+  isTokenExpired(): boolean {
+    const token = this.getToken();
+    return !token || this.jwtHelper.isTokenExpired(token);
   }
 
 }
