@@ -43,3 +43,21 @@
 .loading-message {
   margin: 1rem;
 }
+
+#heart-button {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --border-radius: 50%;
+  --background: transparent;
+
+  ion-icon {
+    font-size: 1.5rem;
+    transition: transform 0.2s ease;
+  }
+
+  &:active ion-icon {
+    transform: scale(1.2);
+  }
+}

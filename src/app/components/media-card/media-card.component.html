@@ -29,7 +29,7 @@
         <ion-card-subtitle class="text-center">{{product.company.businessName}}</ion-card-subtitle>
       </ion-card-header>
 
-      <ion-button fill="clear" (click)="toggleFavorite(product.id)">
+      <ion-button id="heart-button" fill="clear" (click)="toggleFavorite(product.id)">
         <ion-icon 
           slot="icon-only"
           [name]="isFavorite(product.id) ? 'heart' : 'heart-outline'"
