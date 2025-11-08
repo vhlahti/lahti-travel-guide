@@ -3,7 +3,7 @@
     <ion-item *ngFor="let product of favoriteProducts">
       <ion-label>
         <h2>{{ product.productInformations[0]?.name }}</h2>
-        <p>{{ product.company?.businessName }}</p>
+        <p>{{ product.company.businessName }}</p>
       </ion-label>
     </ion-item>
   </ion-list>
