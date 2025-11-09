@@ -1,5 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonIcon, AlertController } from '@ionic/angular/standalone';
+import { 
+  IonCard, 
+  IonCardContent, 
+  IonCardHeader, 
+  IonCardSubtitle, 
+  IonCardTitle, 
+  IonButton, 
+  IonIcon, 
+  AlertController, 
+  IonSelect, 
+  IonSelectOption,
+  IonItem,
+ } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/interfaces/product.interface';
@@ -27,6 +39,9 @@ import { Account } from 'src/app/services/account';
   RouterModule,
   ScrollingModule,
   IonIcon,
+  IonSelect,
+  IonSelectOption,
+  IonItem,
   ],
   standalone: true
 })

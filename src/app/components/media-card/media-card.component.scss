@@ -109,6 +109,22 @@
   padding: 0;
 }
 
+.filter-dropdown {
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
+
+.filter-dropdown ion-item {
+  --background: transparent;
+  --inner-padding-end: 0;
+  --inner-padding-start: 0;
+  --padding-start: 1rem;
+  width: 300px;
+  border: 1px solid var(--ion-color-medium);
+  border-radius: 8px;;
+}
+
 @media (max-width: 600px) {
   .card-list {
     max-width: 100%;
