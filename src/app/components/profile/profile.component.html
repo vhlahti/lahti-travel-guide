@@ -1,0 +1,19 @@
+@if (username) {
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Welcome, {{ username }}!</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <p>You are logged in.</p>
+    <ion-button expand="block" color="danger" (click)="onLogout()">Logout</ion-button>
+  </ion-card-content>
+</ion-card>
+} @else {
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>You are not logged in.</ion-card-title>
+    </ion-card-header>
+    <p><a class="suggestion-link" (click)="onSwitchToLogin()">Please log in to see your profile.</a></p>
+  </ion-card>
+}

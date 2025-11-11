@@ -1,0 +1,36 @@
+<div class="container">
+    <h1 class="heading">Welcome<br><br></h1>
+    <p class="para">Log in to continue!</p>
+    <form [formGroup]="form" (ngSubmit)="onLogin()">
+
+      <ion-item lines="none" class="ion-item">
+        <fieldset  class="input-item">
+          <legend>Username</legend> 
+          <ion-input formControlName="username" type="username" placeholder="username"></ion-input>
+        </fieldset>
+      </ion-item>
+
+      @if (form.get('username')?.invalid && form.get('username')?.touched) {
+      <p class="error-text">Username is required (min 3 characters).</p>
+      }
+
+      <ion-item lines="none" class="ion-item">
+        <fieldset class="input-item">
+          <legend>Password</legend> 
+          <ion-input formControlName="password" type="password" placeholder="*******"></ion-input>
+        </fieldset>
+      </ion-item>
+
+      @if (form.get('password')?.invalid && form.get('password')?.touched) {
+      <p class="error-text">Password must be at least 3 characters.</p>
+      }
+
+      @if (errorMessage) {
+      <p class="error-text">{{ errorMessage }}</p>
+      }
+
+      <p class="suggestion-text">I'm a new user.<a class="suggestion-link" (click)="onSwitchToRegister()">Register?</a></p>
+      <ion-button class="action-button" expand="block" type="submit" [disabled]="form.invalid">Log in</ion-button>
+
+    </form>
+</div>

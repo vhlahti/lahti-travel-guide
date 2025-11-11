@@ -1,0 +1,54 @@
+<div class="container">
+    <h1 class="heading">Create account<br><br></h1>
+    <p class="para">Sign up to get started!</p>
+    <form [formGroup]="form" (ngSubmit)="onRegister()">
+
+      <ion-item lines="none" class="ion-item">
+        <fieldset  class="input-item">
+          <legend>Username</legend> 
+          <ion-input formControlName="username" type="username" placeholder="username"></ion-input>
+        </fieldset>
+      </ion-item>
+
+      @if (form.get('username')?.invalid && form.get('username')?.touched) {
+      <p class="error-text">Username is required (min 3 characters).</p>
+      }
+
+      <ion-item lines="none" class="ion-item">
+        <fieldset class="input-item">
+          <legend>Password</legend> 
+          <ion-input formControlName="password" type="password" placeholder="*******"></ion-input>
+        </fieldset>
+      </ion-item>
+
+      @if (form.get('password')?.hasError('required') && form.get('password')?.touched) {
+      <p class="error-text">Password is required.</p>
+      } 
+      @else if (form.get('password')?.hasError('minlength') && form.get('password')?.touched) {
+      <p class="error-text">Password must be at least 3 characters.</p>
+      }
+
+      <ion-item lines="none" class="ion-item">
+      <fieldset class="input-item">
+        <legend>Confirm password</legend>
+        <ion-input
+          formControlName="confirmPassword"
+          type="password"
+          placeholder="*******"></ion-input>
+      </fieldset>
+    </ion-item>
+
+      @if (form.get('password')?.value !== form.get('confirmPassword')?.value &&
+         form.get('confirmPassword')?.touched) {
+      <p class="error-text">Passwords do not match!</p>
+      }
+
+      @if (message) {
+      <p class="message">{{ message }}</p>
+      }
+
+      <p class="suggestion-text">I'm already a member.<a class="suggestion-link" (click)="onSwitchToLogin()">Log in?</a></p>
+      <ion-button class="action-button" expand="block" type="submit" [disabled]="form.invalid">Register</ion-button>
+
+    </form>
+</div>
