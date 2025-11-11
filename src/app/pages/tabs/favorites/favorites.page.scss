@@ -1,0 +1,14 @@
+.background-image {
+  background-image: url('/assets/img/niemi.jpg');
+  height: 100vh;           /* full viewport height */
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+ion-content {
+  --background: transparent;
+  position: relative;
+  z-index: 2;  /* keep content above overlay if needed */
+}

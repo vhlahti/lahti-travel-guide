@@ -1,14 +1,18 @@
-<ion-content [fullscreen]="true">
-  <ion-list *ngIf="favoriteProducts.length > 0; else noFavs">
-    <ion-item *ngFor="let product of favoriteProducts">
-      <ion-label>
-        <h2>{{ product.productInformations[0]?.name }}</h2>
-        <p>{{ product.company.businessName }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+<div class="background-image">
+  <ion-content [fullscreen]="true">
+    <div class="card-list-container">
+      <ion-list *ngIf="favoriteProducts.length > 0; else noFavs">
+        <ion-item *ngFor="let product of favoriteProducts" class="card-item">
+          <ion-label>
+            <h2>{{ product.productInformations[0]?.name }}</h2>
+            <p>{{ product.company.businessName }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
 
-  <ng-template #noFavs>
-    <p class="text-center">No favorites yet.</p>
-  </ng-template>
-</ion-content>
+      <ng-template #noFavs>
+        <p class="no-favs-text">No favorites yet.</p>
+      </ng-template>
+    </div>
+  </ion-content>
+</div>
