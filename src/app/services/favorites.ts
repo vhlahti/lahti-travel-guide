@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, map, BehaviorSubject, tap, catchError, of } from 'rxjs';
 import { Account } from './account';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Favorites {
-  private apiUrl = 'http://localhost:3000/api/users'; // temp for local development
+  private apiUrl = `${environment.apiUrl}/api/users`;
   private favorites$ = new BehaviorSubject<string[]>([]);
 
   constructor(private http: HttpClient, private auth: Account) {

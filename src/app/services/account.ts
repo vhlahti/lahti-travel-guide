@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { environment } from 'src/environments/environment';
 
 interface LoginResponse {
   token: string;
@@ -12,7 +13,7 @@ interface LoginResponse {
   providedIn: 'root'
 })
 export class Account {
-  private apiUrl = 'http://localhost:3000/api/users'; // temp URL for local development
+  private apiUrl = `${environment.apiUrl}/api/users`;
   private tokenKey = 'auth_token';
   private jwtHelper = new JwtHelperService();
 

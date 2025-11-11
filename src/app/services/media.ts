@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GetProductsResponse } from '../interfaces/product.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Media {
   private http = inject(HttpClient);
-  private LOCAL_API_URL = 'http://localhost:3000/api'; // For /api use proxy config
+  private LOCAL_API_URL = `${environment.apiUrl}/api`;
 
     // get all products in Lahti (municipality code 398)
 
