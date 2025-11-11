@@ -1,52 +1,50 @@
-<div class="filter-dropdown">
-  <ion-item lines="none">
-    <ion-select
-      aria-label="categories"
-      interface="popover"
-      placeholder="Select category"
-      [value]="selectedCategory"
-      (ionChange)="filterByCategory($event.detail.value)">
-      <ion-select-option value="all">All</ion-select-option>
-      <ion-select-option *ngFor="let cat of productCategories" [value]="cat">
-        {{ formatCategory(cat) }}
-      </ion-select-option>
-    </ion-select>
-  </ion-item>
-</div>
-
-
-<div *ngIf="filteredProducts.length > 0; else loading">
-  <cdk-virtual-scroll-viewport itemSize="200" class="scroll-viewport">
-  <div class="card-list">
-    <ion-card *cdkVirtualFor="let product of filteredProducts" class="product-card">
-      <div class="image-wrapper">
-        <img
-          [src]="product.productImages[0]?.thumbnailUrl || 'assets/img/card-placeholder-small.png'"
-          [alt]="product.productImages[0]?.altText || product.productInformations[0]?.name || 'Product image'"/>
-      </div>
-
-      <ion-card-header>
-        <ion-card-title class="text-center">{{product.productInformations[0]?.name}}</ion-card-title>
-        <ion-card-subtitle class="text-center">{{product.company.businessName}}</ion-card-subtitle>
-      </ion-card-header>      
-
-      <ion-card-content class="buttons">
-        <a routerLink="/item-detail/{{product.id}}"><ion-button size="small">Details</ion-button></a>
-        <ion-button id="heart-button" fill="clear" (click)="toggleFavorite(product.id)">
-        <ion-icon 
-          slot="icon-only"
-          [name]="isFavorite(product.id) ? 'heart' : 'heart-outline'"
-          [color]="isFavorite(product.id) ? 'danger' : 'danger'">
-        </ion-icon>
-      </ion-button>
-      </ion-card-content>
-
-    </ion-card>
+  <div class="filter-dropdown">
+    <ion-item lines="none">
+      <ion-select
+        aria-label="categories"
+        interface="popover"
+        placeholder="Select category"
+        [value]="selectedCategory"
+        (ionChange)="filterByCategory($event.detail.value)">
+        <ion-select-option value="all">All</ion-select-option>
+        <ion-select-option *ngFor="let cat of productCategories" [value]="cat">
+          {{ formatCategory(cat) }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
   </div>
-  <p class="text-center">End of list.</p>
-  </cdk-virtual-scroll-viewport>
-</div>
-  
-<ng-template #loading>
-  <p class="loading-message">Loading items...</p>
-</ng-template>
+
+  @if (filteredProducts.length > 0) {
+    <cdk-virtual-scroll-viewport itemSize="220" class="scroll-viewport">
+      <div class="card-list">
+        <ion-card *cdkVirtualFor="let product of filteredProducts" class="product-card">
+          <div class="image-wrapper">
+            <img
+              [src]="product.productImages[0]?.largeUrl || 'assets/img/card-placeholder-small.png'"
+              [alt]="product.productImages[0]?.altText || product.productInformations[0]?.name || 'Product image'"/>
+          </div>
+
+          <ion-card-header>
+            <ion-card-title class="text-center">{{ product.productInformations[0]?.name }}</ion-card-title>
+            <ion-card-subtitle class="text-center">{{ product.company.businessName }}</ion-card-subtitle>
+          </ion-card-header>
+
+          <ion-card-content class="buttons">
+            <a routerLink="/item-detail/{{ product.id }}">
+              <ion-button size="small">Details</ion-button>
+            </a>
+            <ion-button id="heart-button" fill="clear" (click)="toggleFavorite(product.id)">
+              <ion-icon
+                slot="icon-only"
+                [name]="isFavorite(product.id) ? 'heart' : 'heart-outline'"
+                [color]="isFavorite(product.id) ? 'danger' : 'danger'">
+              </ion-icon>
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </cdk-virtual-scroll-viewport>
+    <p class="text-center end-message">End of list.</p>
+  } @else {
+    <p class="loading-message">Loading items...</p>
+  }
