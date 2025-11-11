@@ -1,58 +1,113 @@
-.heading{
-    font-size: 32px;
-    font-weight: bold;
-    padding-left: 20px;
-    margin-top: 70px;
-    margin-bottom: -60px;
-}
-.para{
-    font-size: 22px;
-    font-weight: 500;
-    padding-left: 20px;
-    margin-bottom: 70px;
-    color: #A6ABB1;
-    padding-top: 0.2rem;
-}
-.input-item{
-    padding-left: 20px;
-    width: 100%;
-    border-radius: 12px;
-    border: 2px solid #e2e2e2;
-    height: 56px;
-    ion-input{
-        margin-top: -12px;
-    }
-}
-.ion-item{
-    margin-top: 20px;
-}
-.action-button{
-    padding-left: 20px;
-    padding-right: 20px;
-    height: 50px;
-    --border-radius: 12px;
-    margin-top: 60px;
-    --box-shadow: none;
-}
-.suggestion-text{
-    a{
-        text-decoration: none;
-        color: var(--ion-color-primary);
-    }
-    padding-right: 20px;
-    text-align: end;
-}
-.suggestion-link {
-    padding-left: 0.2rem;
-    cursor: pointer;
-}
-.error-text {
-    margin-left: 1.5rem;
-}
 .container {
-    max-width: 500px;
-    margin: 0 auto;
+  width: 100%;
+  max-width: 600px; /* Set desired width */
+  height: 100vh; /* Full vertical height */
+  margin: 0 auto; /* Center horizontally */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center vertically */
+  padding: 0 1rem; /* Some padding for smaller screens */
+  box-sizing: border-box;
+  background-color: white;
 }
+
+.heading {
+  font-size: 32px;
+  font-weight: bold;
+  padding-left: 20px;
+  margin-top: 0; /* reset because we are vertically centering */
+  margin-bottom: -40px;
+}
+
+.para {
+  font-size: 22px;
+  font-weight: 500;
+  padding-left: 20px;
+  margin-bottom: 70px;
+  color: #a6abb1;
+  padding-top: 0.2rem;
+}
+
+.input-item {
+  padding-left: 20px;
+  width: 100%;
+  border-radius: 12px;
+  border: 2px solid #e2e2e2;
+  height: 56px;
+
+  ion-input {
+    margin-top: -12px;
+  }
+}
+
+.ion-item {
+  margin-top: 20px;
+}
+
+.action-button {
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 50px;
+  --border-radius: 12px;
+  margin-top: 60px;
+  --box-shadow: none;
+}
+
+.suggestion-text {
+  padding-right: 20px;
+  text-align: end;
+
+  a {
+    text-decoration: none;
+    color: var(--ion-color-primary);
+  }
+}
+
+.suggestion-link {
+  padding-left: 0.2rem;
+  cursor: pointer;
+}
+
+.error-text {
+  margin-left: 1.5rem;
+}
+
 .welcome-text {
-    margin-left: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.background-image {
+  background-image: url('/assets/img/salpaus.jpeg');
+}
+
+/* ---------- RESPONSIVENESS ---------- */
+@media (max-width: 768px) {
+  .container {
+    max-width: 90%;
+    padding: 0 1rem;
+  }
+
+  .heading {
+    font-size: 26px;
+    margin-bottom: -30px;
+  }
+
+  .para {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+
+  .heading {
+    font-size: 22px;
+  }
+
+  .para {
+    font-size: 16px;
+  }
 }

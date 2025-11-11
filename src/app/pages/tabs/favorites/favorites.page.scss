@@ -12,3 +12,9 @@ ion-content {
   position: relative;
   z-index: 2;  /* keep content above overlay if needed */
 }
+
+.no-favs-text {
+  margin: 2rem;
+  color: white;
+  font-size: 1.2em;
+}
