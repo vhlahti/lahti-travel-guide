@@ -1,12 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonToolbar, IonButtons, IonBackButton, IonSpinner } from '@ionic/angular/standalone';
+import {
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonSpinner,
+  IonButton,
+  IonIcon,
+ } from '@ionic/angular/standalone';
 import { Observable, map } from 'rxjs';
 import { Product } from 'src/app/interfaces/product.interface';
 import { Media } from 'src/app/services/media';
 import { ActivatedRoute } from '@angular/router';
 import { TagUnderscorePipe } from './tag-underscore.pipe';
+import { addIcons } from 'ionicons';
+import { linkOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-item-detail',
@@ -22,13 +33,18 @@ import { TagUnderscorePipe } from './tag-underscore.pipe';
     IonButtons,
     IonBackButton,
     IonSpinner,
-    TagUnderscorePipe
+    TagUnderscorePipe,
+    IonButton,
+    IonIcon,
   ]
 })
 export class ItemDetailPage implements OnInit {
   product$!: Observable<Product | undefined>;
 
-  constructor(private media: Media, private route: ActivatedRoute) { }
+  constructor(private media: Media, private route: ActivatedRoute) {
+    addIcons({
+    linkOutline })
+  }
 
   ngOnInit() {
 

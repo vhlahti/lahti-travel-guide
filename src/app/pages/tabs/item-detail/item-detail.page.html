@@ -11,31 +11,85 @@
 
 <div *ngIf="product$ | async as product; else loading">
   <div *ngIf="product; else notFound">
-    <div class="bg-container">
-    <div class="bg" [style.backgroundImage]="'url(' + (product.productImages[0]?.originalUrl || 'assets/img/detail_placeholder.png') + ')'"></div>
+    <!-- Hero Image -->
+    <div class="hero-image" [style.backgroundImage]="'url(' + (product.productImages[0]?.originalUrl || 'assets/img/detail_placeholder.png') + ')'"></div>
+
+    <!-- Event Description Section -->
+    <div class="section-container">
+      <div class="event-description">
+        <h1>{{ product.productInformations[0]?.name }}</h1>
+        <p class="company-name">{{ product.company.businessName }}</p>
+        <p class="description">{{ product.productInformations[0]?.description }}</p>
+      </div>
+    </div>
+
+    <!-- Product Details Grid (2 columns) -->
+    <div class="section-container">
+      <h2 class="section-title">Product Details</h2>
+      <div class="grid-2">
+        <div class="grid-item">
+          <p class="label">Type</p>
+          <p class="value">{{ (product.type | tagUnderscore) | titlecase }}</p>
+        </div>
+        <div class="grid-item">
+          <p class="label">Pricing</p>
+          <p class="value">{{ (product.productPricings[0]?.pricingType | titlecase) || '-' }}</p>
+        </div>
+        <div class="grid-item">
+          <p class="label">Available Months</p>
+          <div class="tags">
+            <span *ngFor="let m of product.productAvailableMonths" class="tag">{{ m.month }}</span>
+          </div>
+        </div>
+        <div class="grid-item">
+          <p class="label">Last Updated</p>
+          <p class="value">{{ product.updatedAt | date:'dd.MM.yyyy' }}</p>
+        </div>
+      </div>
+      <a *ngIf="product.productInformations.length" [href]="product.productInformations[0].url" target="_blank" rel="noopener noreferrer" class="product-link">
+        <ion-button size="md">
+          <ion-icon name="link-outline"></ion-icon>
+          Visit Product Webpage</ion-button>
+      </a>
+    </div>
+
+    <!-- Contact Details Grid (2 columns) -->
+    <div class="section-container">
+      <h2 class="section-title">Contact Information</h2>
+      <div class="grid-2">
+        <div class="grid-item">
+          <p class="label">Business</p>
+          <p class="value">{{ product.company.businessName }}</p>
+        </div>
+        <div class="grid-item">
+          <p class="label">Email</p>
+          <a *ngIf="product.contactDetails[0]?.email" [href]="'mailto:' + product.contactDetails[0].email" class="contact-link">{{ product.contactDetails[0].email }}</a>
+          <p *ngIf="!product.contactDetails[0]?.email" class="value">N/A</p>
+        </div>
+        <div class="grid-item">
+          <p class="label">Address</p>
+          <p class="value">{{ product.postalAddresses[0]?.streetName || '-' }}, 
+            {{ product.postalAddresses[0]?.postalCode || '-' }}, 
+            {{ product.postalAddresses[0]?.city || '-' }}</p>
+        </div>
+        <div class="grid-item">
+          <p class="label">Phone</p>
+          <a *ngIf="product.contactDetails[0]?.phone" [href]="'tel:' + product.contactDetails[0].phone" class="contact-link">{{ product.contactDetails[0].phone }}</a>
+          <p *ngIf="!product.contactDetails[0]?.phone" class="value">N/A</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tags Section -->
+    <div class="section-container tags-section">
+      <h2 class="section-title">Tags</h2>
+      <div class="tags">
+        <span *ngFor="let t of product.productTags" class="tag">{{ t.tag | tagUnderscore }}</span>
+      </div>
+    </div>
   </div>
-  <div class="text-container">
-  <h3>{{ product.productInformations[0]?.name }}</h3>
-  <p>{{ product.company.businessName }}</p>
-  <p>{{ product.productInformations[0]?.description }}</p>
-  <a *ngIf="product.productInformations?.length"
-   [href]="product.productInformations[0].url"
-   target="_blank"
-   rel="noopener noreferrer">
-  Product webpage</a>
-  <p>{{ product.type }}</p>
-  <p>{{ product.postalAddresses[0]?.postalCode }}</p>
-  <p>{{ product.postalAddresses[0]?.streetName }}</p>
-  <p>{{ product.postalAddresses[0]?.city }}</p>
-  <p *ngFor="let m of product.productAvailableMonths">{{ m.month }}</p>
-  <p *ngFor="let t of product.productTags">{{ t.tag | tagUnderscore }}</p>
-  <p>{{ product.productPricings[0]?.pricingType }}</p>
-  <p>{{ product.contactDetails[0]?.email }}</p>
-  <p>{{ product.contactDetails[0]?.phone }}</p>
-  <p>{{ product.updatedAt | date:'dd.MM.yyyy' }}</p>
 </div>
-</div>
-</div>
+
 
 <ng-template #loading>
   <div class="spinner-container">
