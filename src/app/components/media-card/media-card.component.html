@@ -15,7 +15,7 @@
   </div>
 
   @if (filteredProducts.length > 0) {
-    <cdk-virtual-scroll-viewport itemSize="220" class="scroll-viewport">
+    <cdk-virtual-scroll-viewport #viewport itemSize="220" class="scroll-viewport">
       <div class="card-list">
         <ion-card *cdkVirtualFor="let product of filteredProducts" class="product-card">
           <div class="image-wrapper">
