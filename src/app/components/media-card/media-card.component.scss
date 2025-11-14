@@ -81,8 +81,20 @@
   overflow: auto;
 }
 
-.loading-message {
-  margin: 1rem;
+ion-spinner {
+  width: 150px;
+  height: 150px;
+}
+
+.spinner-container {
+  position: fixed;
+  top: 150px; /* adjust depending on dropdown height */
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+  z-index: 10;
 }
 
 #heart-button {

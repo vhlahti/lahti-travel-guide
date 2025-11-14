@@ -11,6 +11,7 @@ import {
   IonSelect, 
   IonSelectOption,
   IonItem,
+  IonSpinner,
  } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
@@ -44,6 +45,7 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
   IonSelect,
   IonSelectOption,
   IonItem,
+  IonSpinner,
   ],
   standalone: true
 })
