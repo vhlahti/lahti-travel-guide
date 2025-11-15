@@ -1,6 +1,7 @@
+<div class="background-image">
 <div class="container">
-    <h1 class="heading">Welcome<br><br></h1>
-    <p class="para">Log in to continue!</p>
+    <h1 class="heading welcome-text">Welcome<br><br></h1>
+    <p class="para welcome-text">Log in to continue!</p>
     <form [formGroup]="form" (ngSubmit)="onLogin()">
 
       <ion-item lines="none" class="ion-item">
@@ -33,4 +34,5 @@
       <ion-button class="action-button" expand="block" type="submit" [disabled]="form.invalid">Log in</ion-button>
 
     </form>
+</div>
 </div>

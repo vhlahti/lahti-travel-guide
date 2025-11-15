@@ -2,3 +2,23 @@
     padding-left: 1.5rem;
     cursor: pointer;
 }
+
+.login-message {
+    padding-bottom: 0.5rem;
+    text-align: center;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+}
+
+.background-image {
+  background-image: url('/assets/img/icerink.jpeg'); // path to your image
+  background-size: cover;          // makes it cover the whole container
+  background-position: center;     // centers the image
+  background-repeat: no-repeat;    // prevents tiling
+  height: calc(100vh - 57px);  // subtract navbar height
+  width: 100%;
+}

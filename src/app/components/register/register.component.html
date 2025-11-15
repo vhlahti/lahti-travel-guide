@@ -1,6 +1,7 @@
+<div class="background-image">
 <div class="container">
-    <h1 class="heading">Create account<br><br></h1>
-    <p class="para">Sign up to get started!</p>
+    <h1 class="heading welcome-text">Create account<br><br></h1>
+    <p class="para welcome-text">Sign up to get started!</p>
     <form [formGroup]="form" (ngSubmit)="onRegister()">
 
       <ion-item lines="none" class="ion-item">
@@ -51,4 +52,5 @@
       <ion-button class="action-button" expand="block" type="submit" [disabled]="form.invalid">Register</ion-button>
 
     </form>
+</div>
 </div>
