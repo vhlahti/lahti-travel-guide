@@ -1,0 +1,97 @@
+.header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.datahub-logo {
+  width: 100px;    /* smaller size – adjust as needed */
+  height: auto;
+  margin-left: 12px;
+}
+
+ion-card {
+  max-width: 600px;
+  width: 92%;
+  height: auto;
+  --background: transparent;
+  background: rgba(255, 255, 255, 0.8); /* slightly transparent */
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.22);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  overflow: hidden;
+}
+
+.background-image {
+  background-image: url('/assets/img/skijumptowers.jpeg');
+  min-height: 100vh;           /* full viewport height */
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+ion-content {
+  --background: transparent;
+  position: relative;
+  z-index: 2;  /* keep content above overlay if needed */
+}
+
+ion-content.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+  min-height: 100vh;
+
+  padding: 0 !important;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --overflow: hidden; /* stops scroll host from breaking centering */
+}
+
+
+/* ensure the content fills viewport so vertical centering works */
+ion-content.center-content {
+  min-height: 100vh;
+}
+
+/* credit row: align icon and text vertically */
+.credit-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.25rem;
+}
+.credit-link {
+  display: inline-flex;
+  align-items: center;
+}
+.credit-text {
+  font-size: 0.95rem;
+  line-height: 1;
+  padding-top: 0.3rem;
+}
+
+a ion-icon {
+  color: purple !important;
+}
+
+/* MOBILE: center the card on small screens */
+@media (max-width: 768px) {
+  ion-content {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-direction: column !important;
+    height: 100%;
+    min-height: 100vh;
+  }
+
+  ion-card {
+    margin: 0 auto !important;
+  }
+}
+
