@@ -50,10 +50,6 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
   standalone: true
 })
 export class MediaCardComponent implements OnInit {
-    showDropdown = false;
-    toggleDropdown() {
-      this.showDropdown = !this.showDropdown;
-    }
   @ViewChild('viewport') viewport!: CdkVirtualScrollViewport;
 
   products$!: Observable<Product[]>; // original product list
@@ -61,6 +57,7 @@ export class MediaCardComponent implements OnInit {
   allProducts: Product[] = [];        // store all products again
   filteredProducts: Product[] = [];   // store filtered list
   selectedCategory: ProductType | 'all' = 'all';
+  searchTerm: string = '';            // search query
 
   productCategories: ProductType[] = [
   ProductType.Accommodation,
@@ -102,20 +99,40 @@ export class MediaCardComponent implements OnInit {
     this.fav.loadFavorites();
   }
 
-  // filtering logic
+  // filtering logic by category and search term
   filterByCategory(category: ProductType | 'all') {
     this.selectedCategory = category;
+    this.applyFilters();
+  }
 
-    if (category === 'all') {
-      this.filteredProducts = this.allProducts;
-    } else {
-      this.filteredProducts = this.allProducts.filter(
-        product => product.type === category
+  // search by product name
+  onSearchChange(event: any) {
+    this.searchTerm = event.detail.value || '';
+    this.applyFilters();
+  }
+
+  // combined filter: applies both category and search term
+  private applyFilters() {
+    let results = this.allProducts;
+
+    // Filter by category
+    if (this.selectedCategory !== 'all') {
+      results = results.filter(product => product.type === this.selectedCategory);
+    }
+
+    // Filter by search term (case-insensitive)
+    if (this.searchTerm.trim()) {
+      const query = this.searchTerm.toLowerCase();
+      results = results.filter(product =>
+        product.productInformations[0]?.name?.toLowerCase().includes(query)
       );
     }
+
+    this.filteredProducts = results;
+
     // scroll back to top
     if (this.viewport) {
-    this.viewport.scrollToIndex(0);
+      this.viewport.scrollToIndex(0);
     }
   }
 

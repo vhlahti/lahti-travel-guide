@@ -11,7 +11,7 @@
 </ion-select>
 
 <div class="search-row">
-  <ion-searchbar></ion-searchbar>
+  <ion-searchbar (ionChange)="onSearchChange($event)"></ion-searchbar>
   
   <ion-icon name="options-outline" class="options-icon" (click)="select.open($event)"></ion-icon>
 </div>
