@@ -22,7 +22,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ProductType } from 'src/app/interfaces/product-type.enum';
 import { Favorites } from 'src/app/services/favorites';
 import { addIcons } from 'ionicons';
-import { heart, heartOutline, optionsOutline } from 'ionicons/icons';
+import { heart, heartOutline, optionsOutline, arrowUpOutline } from 'ionicons/icons';
 import { Account } from 'src/app/services/account';
 import { ViewChild } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
@@ -71,12 +71,13 @@ export class MediaCardComponent implements OnInit {
   ProductType.Venue
   ];
 
+  selectedSort: string = 'alphabetical-asc';
   favoriteIds: string[] = [];
   isLoggedIn = false;
 
   constructor(private media: Media, private fav: Favorites, private auth: Account, private alertCtrl: AlertController) {
     addIcons({
-    heart, heartOutline, optionsOutline })
+    heart, heartOutline, optionsOutline, arrowUpOutline })
    }
 
   ngOnInit() {
@@ -111,9 +112,15 @@ export class MediaCardComponent implements OnInit {
     this.applyFilters();
   }
 
-  // combined filter: applies both category and search term
+  /** Sort selection */
+  sortProducts(sortBy: string) {
+    this.selectedSort = sortBy;
+    this.applyFilters();
+  }
+
+  // combined filter
   private applyFilters() {
-    let results = this.allProducts;
+    let results = [...this.allProducts];
 
     // Filter by category
     if (this.selectedCategory !== 'all') {
@@ -128,7 +135,8 @@ export class MediaCardComponent implements OnInit {
       );
     }
 
-    this.filteredProducts = results;
+    results = this.sortResults(results, this.selectedSort);
+    this.filteredProducts = [...results];
 
     // scroll back to top
     if (this.viewport) {
@@ -163,6 +171,30 @@ export class MediaCardComponent implements OnInit {
   // helper for the template
   isFavorite(productId: string): boolean {
     return this.favoriteIds.includes(productId);
+  }
+
+  /** Sorting helper */
+  private sortResults(products: Product[], sortBy: string): Product[] {
+    switch (sortBy) {
+      case 'alphabetical-asc':
+        return [...products].sort((a, b) =>
+          (a.productInformations[0]?.name || '').localeCompare(b.productInformations[0]?.name || '')
+        );
+      case 'alphabetical-desc':
+        return [...products].sort((a, b) =>
+          (b.productInformations[0]?.name || '').localeCompare(a.productInformations[0]?.name || '')
+        );
+      case 'oldest':
+        return [...products].sort((a, b) =>
+          new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()
+        );
+      case 'newest':
+        return [...products].sort((a, b) =>
+          new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+        );
+      default:
+        return products;
+    }
   }
 
 }
