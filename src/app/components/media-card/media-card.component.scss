@@ -27,7 +27,6 @@
   flex-direction: column;
   align-items: center; /* center cards horizontally */
   gap: 0.5rem;
-  padding: 0.5rem;
 }
 
 .product-card {
@@ -122,25 +121,44 @@ ion-spinner {
   padding: 0;
 }
 
-.filter-dropdown {
+.search-row {
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin: 0.5rem 0;
+  padding-top: 0.7rem;
+  }
+
+.search-row ion-searchbar {
+  flex: 1;
+  min-width: 220px;
+  max-width: 400px;
+  }
+
+.hidden-select {
+  opacity: 0;       /* fully invisible */
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
 }
 
-.filter-dropdown ion-item {
-  --background: transparent;
-  --inner-padding-end: 0;
-  --inner-padding-start: 0;
-  --padding-start: 1rem;
-  width: 300px;
-  border: 1px solid var(--ion-color-medium);
-  border-radius: 8px;;
+.options-icon {
+  font-size: 2rem;
+  color: var(--ion-color-primary, #004E73);
+  cursor: pointer;
+  transition: color 0.2s;
+  padding-right: 0.5rem;
+}
+
+.options-icon:hover {
+  color: var(--ion-color-secondary, #0077b6);
 }
 
 @media (max-width: 600px) {
   .card-list {
-    padding: 0.5rem;
+    padding: 0 0.5rem 0.5rem 0.5rem;
   }
 
   .product-card {
@@ -159,5 +177,9 @@ ion-spinner {
 
   ion-card-subtitle {
     font-size: 0.75rem;
+  }
+
+  .search-row {
+    padding-top: 0;
   }
 }

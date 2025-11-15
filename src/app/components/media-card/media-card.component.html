@@ -1,18 +1,32 @@
-  <div class="filter-dropdown">
-    <ion-item lines="none">
-      <ion-select
-        aria-label="categories"
-        interface="popover"
-        placeholder="Select category"
-        [value]="selectedCategory"
-        (ionChange)="filterByCategory($event.detail.value)">
-        <ion-select-option value="all">All</ion-select-option>
-        <ion-select-option *ngFor="let cat of productCategories" [value]="cat">
-          {{ formatCategory(cat) }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-  </div>
+<ion-select
+  #sortSelect
+  interface="popover"
+  [value]="selectedSort"
+  (ionChange)="sortProducts($event.detail.value)"
+  class="hidden-select">
+  <ion-select-option value="alphabetical-asc">A → Z</ion-select-option>
+  <ion-select-option value="alphabetical-desc">Z → A</ion-select-option>
+  <ion-select-option value="oldest">Oldest</ion-select-option>
+  <ion-select-option value="newest">Newest</ion-select-option>
+</ion-select>
+
+<ion-select
+  #select
+  interface="popover"
+  [value]="selectedCategory"
+  (ionChange)="filterByCategory($event.detail.value)"
+  class="hidden-select">
+  <ion-select-option value="all">All</ion-select-option>
+  <ion-select-option *ngFor="let cat of productCategories" [value]="cat">
+    {{ formatCategory(cat) }}
+  </ion-select-option>
+</ion-select>
+
+<div class="search-row">
+  <ion-searchbar [debounce]="300" (ionInput)="onSearchChange($event)"></ion-searchbar>
+  <ion-icon name="arrow-up-outline" class="options-icon" (click)="sortSelect.open($event)"></ion-icon>
+  <ion-icon name="options-outline" class="options-icon" (click)="select.open($event)"></ion-icon>
+</div>
 
   @if (filteredProducts.length > 0) {
     <cdk-virtual-scroll-viewport #viewport itemSize="220" class="scroll-viewport">
