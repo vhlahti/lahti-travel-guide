@@ -10,8 +10,8 @@ import {
   AlertController, 
   IonSelect, 
   IonSelectOption,
-  IonItem,
   IonSpinner,
+  IonSearchbar,
  } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
@@ -22,7 +22,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ProductType } from 'src/app/interfaces/product-type.enum';
 import { Favorites } from 'src/app/services/favorites';
 import { addIcons } from 'ionicons';
-import { heart, heartOutline } from 'ionicons/icons';
+import { heart, heartOutline, optionsOutline } from 'ionicons/icons';
 import { Account } from 'src/app/services/account';
 import { ViewChild } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
@@ -44,12 +44,16 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
   IonIcon,
   IonSelect,
   IonSelectOption,
-  IonItem,
   IonSpinner,
+  IonSearchbar,
   ],
   standalone: true
 })
 export class MediaCardComponent implements OnInit {
+    showDropdown = false;
+    toggleDropdown() {
+      this.showDropdown = !this.showDropdown;
+    }
   @ViewChild('viewport') viewport!: CdkVirtualScrollViewport;
 
   products$!: Observable<Product[]>; // original product list
@@ -75,7 +79,7 @@ export class MediaCardComponent implements OnInit {
 
   constructor(private media: Media, private fav: Favorites, private auth: Account, private alertCtrl: AlertController) {
     addIcons({
-    heart, heartOutline })
+    heart, heartOutline, optionsOutline })
    }
 
   ngOnInit() {

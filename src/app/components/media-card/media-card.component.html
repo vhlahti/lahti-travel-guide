@@ -1,18 +1,20 @@
-  <div class="filter-dropdown">
-    <ion-item lines="none">
-      <ion-select
-        aria-label="categories"
-        interface="popover"
-        placeholder="Select category"
-        [value]="selectedCategory"
-        (ionChange)="filterByCategory($event.detail.value)">
-        <ion-select-option value="all">All</ion-select-option>
-        <ion-select-option *ngFor="let cat of productCategories" [value]="cat">
-          {{ formatCategory(cat) }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-  </div>
+<ion-select
+  #select
+  interface="popover"
+  [value]="selectedCategory"
+  (ionChange)="filterByCategory($event.detail.value)"
+  class="hidden-select">
+  <ion-select-option value="all">All</ion-select-option>
+  <ion-select-option *ngFor="let cat of productCategories" [value]="cat">
+    {{ formatCategory(cat) }}
+  </ion-select-option>
+</ion-select>
+
+<div class="search-row">
+  <ion-searchbar></ion-searchbar>
+  
+  <ion-icon name="options-outline" class="options-icon" (click)="select.open($event)"></ion-icon>
+</div>
 
   @if (filteredProducts.length > 0) {
     <cdk-virtual-scroll-viewport #viewport itemSize="220" class="scroll-viewport">
