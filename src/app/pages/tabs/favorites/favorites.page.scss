@@ -1,0 +1,31 @@
+.background-image {
+  background-image: url('/assets/img/niemi.jpg');
+  height: 100vh;           /* full viewport height */
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+ion-content {
+  --background: transparent;
+  position: relative;
+  z-index: 2;  /* keep content above overlay if needed */
+}
+
+.no-favs-text {
+  margin: 2rem;
+  color: white;
+  font-size: 1.2em;
+}
+
+ion-card {
+  max-width: 600px;
+  margin: 2rem auto;   /* centers the card */
+  width: 100%;         /* allows shrinking on small screens */
+  border-radius: 16px;
+}
+
+ion-icon {
+  cursor: pointer;
+}

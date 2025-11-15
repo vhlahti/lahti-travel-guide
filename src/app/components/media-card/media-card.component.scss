@@ -1,10 +1,9 @@
 .image-wrapper {
-  width: 240px;
-  height: 120px;
+  position: relative;
+  width: 100%;
+  height: 130px;
   overflow: hidden;
-  display: block;
-  margin: 0 auto; /* center the image horizontally */
-  border-radius: 4px; /* optional */
+  border-radius: 6px;
 }
 
 .image-wrapper img {
@@ -13,30 +12,32 @@
   object-fit: cover;    /* fill and crop to maintain aspect */
   object-position: center;
   display: block;
-  padding: 0.2rem;
 }
 
 .text-center {
   text-align: center;
 }
 
+.end-message {
+  color: white;
+}
+
 .card-list {
-    margin: 0.2rem 0 0 0;
-    max-width: 400px;
-    justify-self: center;
-    background-color: rgba(211, 211, 211, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center cards horizontally */
+  gap: 0.5rem;
+  padding: 0.5rem;
 }
 
 .product-card {
-  position: relative;
+  width: 100%;
+  max-width: 400px; /* fixed width on desktop */
   border-radius: 12px;
-  overflow: hidden;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  transition: width 0s;
-  min-width: 340px;
-  max-width: 500px;
-  padding: 0;
+  overflow: hidden;
+  background: var(--ion-card-background, #fff);
 
   ion-card-header {
     text-align: center;
@@ -75,13 +76,25 @@
 }
 
 .scroll-viewport {
-  height: 100vh; /* or a specific container height */
+  height: 73vh;
   width: 100%;
   overflow: auto;
 }
 
-.loading-message {
-  margin: 1rem;
+ion-spinner {
+  width: 150px;
+  height: 150px;
+}
+
+.spinner-container {
+  position: fixed;
+  top: 150px; /* adjust depending on dropdown height */
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+  z-index: 10;
 }
 
 #heart-button {
@@ -127,20 +140,24 @@
 
 @media (max-width: 600px) {
   .card-list {
-    max-width: 100%;
-    width: 100%;
-    padding: 0 0.5rem; /* small side padding */
+    padding: 0.5rem;
   }
 
   .product-card {
     width: 100%;
-    min-width: unset;
-    max-width: unset;
-    margin: 0 auto;
+    max-width: 100%;
+    margin: 0;
   }
 
   .image-wrapper {
-    width: 100%;
-    height: 150px;
+    height: 160px;
+  }
+
+  ion-card-title {
+    font-size: 0.95rem;
+  }
+
+  ion-card-subtitle {
+    font-size: 0.75rem;
   }
 }

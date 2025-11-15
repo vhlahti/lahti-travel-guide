@@ -7,3 +7,12 @@
 ion-toolbar {
     --background: #F5F3E8;
 }
+
+.background-image {
+  background-image: url('/assets/img/sundown.jpeg'); // path to your image
+  background-size: cover;          // makes it cover the whole container
+  background-position: center;     // centers the image
+  background-repeat: no-repeat;    // prevents tiling
+  min-height: 100vh;          // ensures full viewport height
+  width: 100%;                // full width
+}

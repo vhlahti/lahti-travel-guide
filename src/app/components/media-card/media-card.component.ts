@@ -11,6 +11,7 @@ import {
   IonSelect, 
   IonSelectOption,
   IonItem,
+  IonSpinner,
  } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
@@ -23,6 +24,8 @@ import { Favorites } from 'src/app/services/favorites';
 import { addIcons } from 'ionicons';
 import { heart, heartOutline } from 'ionicons/icons';
 import { Account } from 'src/app/services/account';
+import { ViewChild } from '@angular/core';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-media-card',
@@ -42,10 +45,13 @@ import { Account } from 'src/app/services/account';
   IonSelect,
   IonSelectOption,
   IonItem,
+  IonSpinner,
   ],
   standalone: true
 })
 export class MediaCardComponent implements OnInit {
+  @ViewChild('viewport') viewport!: CdkVirtualScrollViewport;
+
   products$!: Observable<Product[]>; // original product list
 
   allProducts: Product[] = [];        // store all products again
@@ -102,6 +108,10 @@ export class MediaCardComponent implements OnInit {
       this.filteredProducts = this.allProducts.filter(
         product => product.type === category
       );
+    }
+    // scroll back to top
+    if (this.viewport) {
+    this.viewport.scrollToIndex(0);
     }
   }
 
