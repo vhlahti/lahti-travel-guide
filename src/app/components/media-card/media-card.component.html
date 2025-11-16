@@ -28,6 +28,12 @@
   <ion-icon name="options-outline" class="options-icon" (click)="select.open($event)"></ion-icon>
 </div>
 
+@if (loading) {
+  <div class="spinner-container">
+    <ion-spinner name="lines-sharp"></ion-spinner>
+  </div>
+} @else {
+
   @if (filteredProducts.length > 0) {
     <cdk-virtual-scroll-viewport #viewport itemSize="220" class="scroll-viewport">
       <div class="card-list">
@@ -57,10 +63,9 @@
           </ion-card-content>
         </ion-card>
       </div>
-      <p class="text-center end-message">End of list.</p>
+      <p class="end-message">End of list.</p>
     </cdk-virtual-scroll-viewport>
   } @else {
-    <div class="spinner-container">
-    <ion-spinner name="lines-sharp"></ion-spinner>
-    </div>
+    <p class="end-message">No results found.</p>
   }
+}

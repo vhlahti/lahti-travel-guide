@@ -77,6 +77,7 @@ export class MediaCardComponent implements OnInit {
   selectedSort: string = 'alphabetical-asc';
   favoriteIds: string[] = [];
   isLoggedIn = false;
+  loading = true;
 
   constructor(private media: Media, private fav: Favorites, private auth: Account, private alertCtrl: AlertController) {
     addIcons({
@@ -89,6 +90,7 @@ export class MediaCardComponent implements OnInit {
     this.products$.subscribe((products) => {
       this.allProducts = products;
       this.filteredProducts = products;
+      this.loading = false; // loading complete, stop spinner
     });
 
     // watch login state
