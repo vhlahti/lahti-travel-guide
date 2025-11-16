@@ -26,6 +26,8 @@ import { heart, heartOutline, optionsOutline, arrowUpOutline } from 'ionicons/ic
 import { Account } from 'src/app/services/account';
 import { ViewChild } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { PreferredInfoPipe } from 'src/app/pipes/preferred-info.pipe';
+import { getPreferredInfo } from 'src/app/helpers/preferred-info.helper';
 
 @Component({
   selector: 'app-media-card',
@@ -46,6 +48,7 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
   IonSelectOption,
   IonSpinner,
   IonSearchbar,
+  PreferredInfoPipe,
   ],
   standalone: true
 })
@@ -74,6 +77,7 @@ export class MediaCardComponent implements OnInit {
   selectedSort: string = 'alphabetical-asc';
   favoriteIds: string[] = [];
   isLoggedIn = false;
+  loading = true;
 
   constructor(private media: Media, private fav: Favorites, private auth: Account, private alertCtrl: AlertController) {
     addIcons({
@@ -86,6 +90,7 @@ export class MediaCardComponent implements OnInit {
     this.products$.subscribe((products) => {
       this.allProducts = products;
       this.filteredProducts = products;
+      this.loading = false; // loading complete, stop spinner
     });
 
     // watch login state
@@ -130,9 +135,10 @@ export class MediaCardComponent implements OnInit {
     // Filter by search term (case-insensitive)
     if (this.searchTerm.trim()) {
       const query = this.searchTerm.toLowerCase();
-      results = results.filter(product =>
-        product.productInformations[0]?.name?.toLowerCase().includes(query)
-      );
+      results = results.filter(product => {
+      const info = getPreferredInfo(product.productInformations);
+      return info?.name?.toLowerCase().includes(query);
+      });
     }
 
     results = this.sortResults(results, this.selectedSort);
@@ -178,11 +184,11 @@ export class MediaCardComponent implements OnInit {
     switch (sortBy) {
       case 'alphabetical-asc':
         return [...products].sort((a, b) =>
-          (a.productInformations[0]?.name || '').localeCompare(b.productInformations[0]?.name || '')
+          (getPreferredInfo(a.productInformations)?.name || '').localeCompare(getPreferredInfo(b.productInformations)?.name || '')
         );
       case 'alphabetical-desc':
         return [...products].sort((a, b) =>
-          (b.productInformations[0]?.name || '').localeCompare(a.productInformations[0]?.name || '')
+          (getPreferredInfo(b.productInformations)?.name || '').localeCompare(getPreferredInfo(a.productInformations)?.name || '')
         );
       case 'oldest':
         return [...products].sort((a, b) =>

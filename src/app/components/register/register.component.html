@@ -39,13 +39,8 @@
       </fieldset>
     </ion-item>
 
-      @if (form.get('password')?.value !== form.get('confirmPassword')?.value &&
-         form.get('confirmPassword')?.touched) {
-      <p class="error-text">Passwords do not match!</p>
-      }
-
       @if (message) {
-      <p class="message">{{ message }}</p>
+      <p class="error-text">{{ message }}</p>
       }
 
       <p class="suggestion-text">I'm already a member.<a class="suggestion-link" (click)="onSwitchToLogin()">Log in?</a></p>

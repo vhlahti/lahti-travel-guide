@@ -18,6 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TagUnderscorePipe } from './tag-underscore.pipe';
 import { addIcons } from 'ionicons';
 import { linkOutline } from 'ionicons/icons';
+import { PreferredInfoPipe } from 'src/app/pipes/preferred-info.pipe';
 
 @Component({
   selector: 'app-item-detail',
@@ -36,6 +37,7 @@ import { linkOutline } from 'ionicons/icons';
     TagUnderscorePipe,
     IonButton,
     IonIcon,
+    PreferredInfoPipe,
   ]
 })
 export class ItemDetailPage implements OnInit {

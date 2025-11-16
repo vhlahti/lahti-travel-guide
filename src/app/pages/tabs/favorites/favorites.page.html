@@ -17,7 +17,7 @@
           </ion-thumbnail>
 
           <ion-label>
-            <h2>{{ product.productInformations[0]?.name }}</h2>
+            <h2>{{ (product.productInformations | preferredInfo)?.name }}</h2>
           </ion-label>
           <ion-icon slot="end" color="danger" name="trash-outline"
           (click)="onTrashClick($event, product.id)"
