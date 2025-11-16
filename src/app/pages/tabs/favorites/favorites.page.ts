@@ -21,6 +21,7 @@ import { addIcons } from 'ionicons';
 import { trashOutline } from 'ionicons/icons';
 import { RouterModule } from '@angular/router';
 import { Router } from 'express';
+import { PreferredInfoPipe } from 'src/app/pipes/preferred-info.pipe';
 
 @Component({
   selector: 'app-favorites',
@@ -41,6 +42,7 @@ import { Router } from 'express';
     IonThumbnail,
     IonIcon,
     RouterModule,
+    PreferredInfoPipe,
 ]
 })
 export class FavoritesPage implements OnInit {

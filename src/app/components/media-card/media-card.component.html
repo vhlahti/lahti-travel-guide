@@ -35,11 +35,11 @@
           <div class="image-wrapper">
             <img
               [src]="product.productImages[0]?.largeUrl || 'assets/img/card-placeholder-small.png'"
-              [alt]="product.productImages[0]?.altText || product.productInformations[0]?.name || 'Product image'"/>
+              [alt]="product.productImages[0]?.altText || (product.productInformations | preferredInfo)?.name || 'Product image'"/>
           </div>
 
           <ion-card-header>
-            <ion-card-title class="text-center">{{ product.productInformations[0]?.name }}</ion-card-title>
+            <ion-card-title class="text-center">{{ (product.productInformations | preferredInfo)?.name }}</ion-card-title>
             <ion-card-subtitle class="text-center">{{ product.company.businessName }}</ion-card-subtitle>
           </ion-card-header>
 

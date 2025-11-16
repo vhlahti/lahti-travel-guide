@@ -17,9 +17,9 @@
     <!-- Event Description Section -->
     <div class="section-container">
       <div class="event-description">
-        <h1>{{ product.productInformations[0]?.name }}</h1>
+        <h1>{{ (product.productInformations | preferredInfo)?.name }}</h1>
         <p class="company-name">{{ product.company.businessName }}</p>
-        <p class="description">{{ product.productInformations[0]?.description }}</p>
+        <p class="description">{{ (product.productInformations | preferredInfo)?.description }}</p>
       </div>
     </div>
 
