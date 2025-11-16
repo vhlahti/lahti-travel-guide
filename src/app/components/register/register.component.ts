@@ -3,6 +3,7 @@ import { IonItem, IonButton, IonInput } from '@ionic/angular/standalone';
 import { Account } from '../../services/account';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
@@ -28,9 +29,12 @@ export class RegisterComponent {
     confirmPassword: ['', [Validators.required]],
   });
 
-  constructor(private fb: FormBuilder, private auth: Account) { }
+  constructor(private fb: FormBuilder, private auth: Account, private toastCtrl: ToastController) { }
 
   onRegister() {
+    // Clear previous error message
+    this.message = '';
+
     if (this.form.invalid) return;
 
     const { username, password, confirmPassword } = this.form.value;
@@ -41,7 +45,9 @@ export class RegisterComponent {
 
     this.auth.register(username!, password!, confirmPassword!).subscribe({
       next: () => {
-        this.message = "Account created successfully!";
+        this.form.reset();
+        this.message = '';
+        this.showSuccessToast();
         setTimeout(() => this.switchToLogin.emit(), 3000);
       },
       error: (err) => (this.message = err.error?.error || "Registration failed! Username already exists."),
@@ -51,5 +57,15 @@ export class RegisterComponent {
   onSwitchToLogin() {
     this.switchToLogin.emit();
   }
+
+  async showSuccessToast() {
+  const toast = await this.toastCtrl.create({
+    message: "Account created successfully! Redirecting to login page...",
+    duration: 3000,
+    color: 'success',
+    position: 'middle',
+    });
+  toast.present();
+}
 
 }
