@@ -83,9 +83,14 @@
 }
 
 .scroll-viewport {
-  height: 73vh;
   width: 100%;
   overflow: auto;
+  /* Use calc to account for safe area and tab bar on mobile */
+  height: calc(100vh - 160px); /* Accounts for tab bar (~56px) + search bar (~64px) */
+  
+  @media (max-width: 600px) {
+    height: calc(100vh - 150px); /* Slightly more on small screens */
+  }
 }
 
 ion-spinner {
