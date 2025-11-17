@@ -9,8 +9,8 @@
   </ion-toolbar>
 </ion-header>
 
-<div *ngIf="product$ | async as product; else loading">
-  <div *ngIf="product; else notFound">
+@if (product$ | async; as product) {
+  @if (product) {
     <!-- Hero Image -->
     <div class="hero-image" [style.backgroundImage]="'url(' + (product.productImages[0]?.originalUrl || 'assets/img/detail_placeholder.png') + ')'"></div>
 
@@ -38,7 +38,9 @@
         <div class="grid-item">
           <p class="label">Available Months</p>
           <div class="tags">
-            <span *ngFor="let m of product.productAvailableMonths" class="tag">{{ m.month }}</span>
+            @for (m of product.productAvailableMonths; track m.month) {
+              <span class="tag">{{ m.month }}</span>
+            }
           </div>
         </div>
         <div class="grid-item">
@@ -46,11 +48,13 @@
           <p class="value">{{ product.updatedAt | date:'dd.MM.yyyy' }}</p>
         </div>
       </div>
-      <a *ngIf="product.productInformations.length" [href]="product.productInformations[0].url" target="_blank" rel="noopener noreferrer" class="product-link">
-        <ion-button size="md">
-          <ion-icon name="link-outline"></ion-icon>
-          Visit Product Webpage</ion-button>
-      </a>
+      @if (product.productInformations.length) {
+        <a [href]="product.productInformations[0].url" target="_blank" rel="noopener noreferrer" class="product-link">
+          <ion-button size="md">
+            <ion-icon name="link-outline"></ion-icon>
+            Visit Product Webpage</ion-button>
+        </a>
+      }
     </div>
 
     <!-- Contact Details Grid (2 columns) -->
@@ -63,8 +67,11 @@
         </div>
         <div class="grid-item">
           <p class="label">Email</p>
-          <a *ngIf="product.contactDetails[0]?.email" [href]="'mailto:' + product.contactDetails[0].email" class="contact-link">{{ product.contactDetails[0].email }}</a>
-          <p *ngIf="!product.contactDetails[0]?.email" class="value">N/A</p>
+          @if (product.contactDetails[0]?.email) {
+            <a [href]="'mailto:' + product.contactDetails[0].email" class="contact-link">{{ product.contactDetails[0].email }}</a>
+          } @else {
+            <p class="value">N/A</p>
+          }
         </div>
         <div class="grid-item">
           <p class="label">Address</p>
@@ -74,8 +81,11 @@
         </div>
         <div class="grid-item">
           <p class="label">Phone</p>
-          <a *ngIf="product.contactDetails[0]?.phone" [href]="'tel:' + product.contactDetails[0].phone" class="contact-link">{{ product.contactDetails[0].phone }}</a>
-          <p *ngIf="!product.contactDetails[0]?.phone" class="value">N/A</p>
+          @if (product.contactDetails[0]?.phone) {
+            <a [href]="'tel:' + product.contactDetails[0].phone" class="contact-link">{{ product.contactDetails[0].phone }}</a>
+          } @else {
+            <p class="value">N/A</p>
+          }
         </div>
       </div>
     </div>
@@ -84,24 +94,25 @@
     <div class="section-container tags-section">
       <h2 class="section-title">Tags</h2>
       <div class="tags">
-        <span *ngFor="let t of product.productTags" class="tag">{{ t.tag | tagUnderscore }}</span>
+        @for (t of product.productTags; track t.tag) {
+          <span class="tag">{{ t.tag | tagUnderscore }}</span>
+        }
       </div>
     </div>
-  </div>
-</div>
-
-
-<ng-template #loading>
-  <div class="spinner-container">
-    <ion-spinner name="lines-sharp"></ion-spinner>
-  </div>
-</ng-template>
-
-<ng-template #notFound>
-    <div class="ion-padding not-found">
-      <p>Item not found.</p>
-      <p>The item you’re looking for doesn’t exist or was removed.</p>
+  } @else {
+    <ng-template #notFound>
+      <div class="ion-padding not-found">
+        <p>Item not found.</p>
+        <p>The item you're looking for doesn't exist or was removed.</p>
+      </div>
+    </ng-template>
+  }
+} @else {
+  <ng-template #loading>
+    <div class="spinner-container">
+      <ion-spinner name="lines-sharp"></ion-spinner>
     </div>
-</ng-template>
+  </ng-template>
+}
 
 </ion-content>
